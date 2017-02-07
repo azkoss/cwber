@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WinFormDemo.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="url" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://baidu.com</Value>
+    </Setting>
+    <Setting Name="width" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1024</Value>
+    </Setting>
+    <Setting Name="height" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">768</Value>
+    </Setting>
+    <Setting Name="MySqlConnectStr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">server=192.168.0.173;database='menzhen';userid=root;password='trans';Charset='utf8'</Value>
+    </Setting>
+    <Setting Name="SSCardComPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM1</Value>
+    </Setting>
+    <Setting Name="UID_Type" Type="System.String" Scope="User">
+      <Value Profile="(Default)">USERIDCARD</Value>
+    </Setting>
+    <Setting Name="UID_Port" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1001</Value>
+    </Setting>
+    <Setting Name="UID_BMPDIR" Type="System.String" Scope="User">
+      <Value Profile="(Default)">uidbmp\</Value>
+    </Setting>
+    <Setting Name="topMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
