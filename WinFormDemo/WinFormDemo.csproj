@@ -187,6 +187,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="Shown.resx">
@@ -217,6 +218,7 @@
   <ItemGroup>
     <Content Include="01.ico" />
     <Content Include="bitbug_favicon.ico" />
+    <None Include="Resources\bg.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
@@ -23,22 +24,22 @@ namespace WinFormDemo
         public Form5()
         {
             InitializeComponent();
-
+            this.BackgroundImage = Image.FromFile(@".\images\bg.png");
             // nOpenPinpad();
         }
 
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            //没有标题
-            this.FormBorderStyle = FormBorderStyle.None;
-            //任务栏不显示
-            this.ShowInTaskbar = false;
-            this.Height = int.Parse(WinFormDemo.Properties.Settings.Default.height);
-            this.Width = int.Parse(WinFormDemo.Properties.Settings.Default.width);
-            webBrowser1.ScrollBarsEnabled = false;
-            webBrowser1.ObjectForScripting = this;
-            this.TopMost = Properties.Settings.Default.topMost;
-        }
+//        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+//        {
+//            //没有标题
+//            this.FormBorderStyle = FormBorderStyle.None;
+//            //任务栏不显示
+//            this.ShowInTaskbar = false;
+//            this.Height = int.Parse(WinFormDemo.Properties.Settings.Default.height);
+//            this.Width = int.Parse(WinFormDemo.Properties.Settings.Default.width);
+//            webBrowser1.ScrollBarsEnabled = false;
+//            webBrowser1.ObjectForScripting = this;
+//            this.TopMost = Properties.Settings.Default.topMost;
+//        }
 
 
         #region 非接读卡器
@@ -693,23 +694,44 @@ namespace WinFormDemo
 
         private void Form5_Load(object sender, EventArgs e)
         {
-//            button1.Hide();
+            //没有标题
+            this.FormBorderStyle = FormBorderStyle.None;
+            //任务栏不显示
+            this.ShowInTaskbar = false;
+            this.Height = int.Parse(WinFormDemo.Properties.Settings.Default.height);
+            this.Width = int.Parse(WinFormDemo.Properties.Settings.Default.width);
+            webBrowser1.ScrollBarsEnabled = false;
+            webBrowser1.ObjectForScripting = this;
+            webBrowser1.Navigate(Properties.Settings.Default.url);
+            this.TopMost = Properties.Settings.Default.topMost;
+
+            //button1.Hide();
             //MessageBox.Show();
             //sfz_card_read();
         }
 
+        
+
+//        private void button1_Click(object sender, EventArgs e)
+//        {
+//            PrtJzDateCreatGuaHao("三层西南侧", "下午", "35", "000089035800", "120305113800", "神经内科门诊", "专科", "张曙光", "男", "60岁", "普通医保",
+//                "1.00", "4.00", "3.00", "2.00", "0.00", "3.00", "ZZ001", "956827", "2016-11-18 13:36:52",
+//                "13:00--16:30","133****2634","20161207200080180828736","ZZ00100001829097793687279172","支付宝支付成功");
+//        }
+
         //验证退出程序
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             keybords kb = new keybords();
             kb.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            PrtJzDateCreatGuaHao("三层西南侧", "下午", "35", "000089035800", "120305113800", "神经内科门诊", "专科", "张曙光", "男", "60岁", "普通医保",
-                "1.00", "4.00", "3.00", "2.00", "0.00", "3.00", "ZZ001", "956827", "2016-11-18 13:36:52",
-                "13:00--16:30","133****2634","20161207200080180828736","ZZ00100001829097793687279172","支付宝支付成功");
+            button1.FlatStyle = FlatStyle.Flat;//样式
+            button1.ForeColor = Color.Transparent;//前景
+            button1.BackColor = Color.Transparent;//去背景
+            button1.FlatAppearance.BorderSize = 0;//去边线
         }
      }
 }

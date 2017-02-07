@@ -125,15 +125,12 @@
   <data name="webBrowser1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="webBrowser1.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
   <data name="webBrowser1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1008, 730</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="webBrowser1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;webBrowser1.Name" xml:space="preserve">
     <value>webBrowser1</value>
@@ -147,42 +144,25 @@
   <data name="&gt;&gt;webBrowser1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="pictureBox1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAE8AAABkCAYAAADHX21zAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAArpAAAK6QH9dc7TAAAAHHRFWHRTb2Z0d2FyZQBBZG9i
-        ZSBGaXJld29ya3MgQ1M0BrLToAAAAjZJREFUeF7t3MtOKkEYReH9/i8HIiogiIgS8MJdRUD2Sb/C/gcn
-        JstkDXvypaoxXReZv1hA8ZM8aF0uF1NmAF5h8Oj399eUGeh8PpsyA/AKg0en08mUGeh4PJoyA/AKg0c/
-        Pz+mzECHw8GUGej7+9uUGejr68uUGYBXGDz6/Pw0ZQba7/emzEC73c6UGWi73ZoyA202G1NmoPV6bcoM
-        tFqtTJmBlsulKTPQx8eHKTPQ+/u7KTPQ29ubKTPQ6+urKTPQYrEwZQaaz+emzECz2cyUGejl5cWUGej5
-        +dmUGWg6nZoyAz09PZkyA00mE1NmoMfHR1NmoPF4bMoM9PDwYMoMNBqNTJmBhsOhKTPQ/f29KTPQYDAw
-        ZQbq9/umzAC8wuBRr9czZQa6u7szZQa6vb01ZQa6ubkxZQbgFQaPut2uKTPQ9fW1KTMArzB41Ol0TJmB
-        rq6uTJkBeIXBo3a7bcoMwCsMHvAqeK1Wy5QZCLgMrnEDrzDzwAMvn3qV1xYjj5HHyPtz/zIxbZm2TFum
-        beWn/689yzuPd95/eufxITT7ENq48T2v8j2PxZ9s8adxYwGosgDEmm22Ztu4sehdWPRnu0VluwWbfLJN
-        Po0bW8wKW+zAq+CxpTbbUtu4saG7sKEdvAoeZzCyMxiNGyeACiegwKvgceIxO/HYuHHqsXLqkYPK2UHl
-        xo1j8oVrAsCr4HGzRXazRePG1SCFq1HAq+Bxm092m0/jxnVIheuguIircBEZeAW8f9ObgKS/ww7tAAAA
-        AElFTkSuQmCC
-</value>
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>500, 0</value>
+  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 68</value>
   </data>
-  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 100</value>
+  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
-    <value>pictureBox1</value>
+  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
