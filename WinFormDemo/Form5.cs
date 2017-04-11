@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -27,19 +28,6 @@ namespace WinFormDemo
             this.BackgroundImage = Image.FromFile(@".\images\bg.png");
             // nOpenPinpad();
         }
-
-//        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-//        {
-//            //没有标题
-//            this.FormBorderStyle = FormBorderStyle.None;
-//            //任务栏不显示
-//            this.ShowInTaskbar = false;
-//            this.Height = int.Parse(WinFormDemo.Properties.Settings.Default.height);
-//            this.Width = int.Parse(WinFormDemo.Properties.Settings.Default.width);
-//            webBrowser1.ScrollBarsEnabled = false;
-//            webBrowser1.ObjectForScripting = this;
-//            this.TopMost = Properties.Settings.Default.topMost;
-//        }
 
 
         #region 非接读卡器
@@ -690,7 +678,31 @@ namespace WinFormDemo
         }
         #endregion
 
-        
+        #region 顺义妇幼启动Lis程序
+
+        public void StartLisPrint()
+        {
+            RunMutilInstanceProcess(1);
+        }
+
+        static void RunMutilInstanceProcess(int i)
+        {
+            string appPath = Properties.Settings.Default.exePath;
+            ProcessStartInfo process = new ProcessStartInfo();
+            process.FileName = appPath;
+            process.Arguments = "process " + i.ToString();
+
+            process.UseShellExecute = false;
+            process.CreateNoWindow = true;
+
+            process.RedirectStandardOutput = true;
+            Process.Start(process);
+
+            // string Result = p.StandardOutput.ReadToEnd();
+            // Console.WriteLine("the console app output is {0}", Result);
+            Console.WriteLine(" process {0} start", i);
+        }
+        #endregion
 
         private void Form5_Load(object sender, EventArgs e)
         {
@@ -703,7 +715,17 @@ namespace WinFormDemo
             webBrowser1.ScrollBarsEnabled = false;
             webBrowser1.ObjectForScripting = this;
             webBrowser1.Navigate(Properties.Settings.Default.url);
-            this.TopMost = Properties.Settings.Default.topMost;
+            if (!Properties.Settings.Default.showWebError)
+            {
+                webBrowser1.ScriptErrorsSuppressed = true;          //屏蔽脚本错误
+            }
+//            this.TopMost = Properties.Settings.Default.topMost;
+
+            if (!Properties.Settings.Default.testMode)
+            {
+                button2.Hide();
+            }
+
 
             //button1.Hide();
             //MessageBox.Show();
@@ -719,12 +741,6 @@ namespace WinFormDemo
 //                "13:00--16:30","133****2634","20161207200080180828736","ZZ00100001829097793687279172","支付宝支付成功");
 //        }
 
-        //验证退出程序
-        private void button1_Click(object sender, EventArgs e)
-        {
-            keybords kb = new keybords();
-            kb.Show();
-        }
 
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
@@ -733,5 +749,74 @@ namespace WinFormDemo
             button1.BackColor = Color.Transparent;//去背景
             button1.FlatAppearance.BorderSize = 0;//去边线
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            StartLisPrint();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            DllClass.AutoEnlargeKeyC(true);
+        }
+
+        //验证退出程序
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            keybords kb = new keybords();
+            kb.Show();
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            string s1;
+            int pos = 50;
+            s1 = "<?xml version='1.0' encoding='utf-8'?>" + "<print_info width='300' height='500'>";
+            s1 += "<tr font='黑体' size='14' x='35' y='" + Convert.ToString(pos) + "' >就诊</tr>";
+            s1 += "<tr font='黑体' size='14' x='35' y='" + Convert.ToString(pos += 30) + "' >位置</tr>";
+            s1 += "<tr font='黑体' size='14' x='190' y='" + Convert.ToString(pos -= 15) + "' >上午1号</tr>";
+            s1 += "<tr font='黑体' size='14' x='80' y='" + Convert.ToString(pos) + "' >门诊3层</tr>";
+            s1 += "<tr font='黑体' size='12' x='70' y='" + Convert.ToString(pos += 45) + "' >海淀医院挂号单(自助)</tr>";
+            s1 += "<tr font='黑体' size='10' x='35' y='" + Convert.ToString(pos += 65) + "' >病案号:000089035800</tr>";
+            //            s1 += "<tr font='黑体' size='13' x='280' y='" + Convert.ToString(pos) + "' >ID:" + PatId + "</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >神经内科门诊</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >号别:专科</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >姓名:张曙光</tr>";
+            s1 += "<tr font='黑体' size='11' x='140' y='" + Convert.ToString(pos) + "' >性别:男</tr>";
+            s1 += "<tr font='黑体' size='11' x='200' y='" + Convert.ToString(pos) + "' >60岁</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >身份:普通医保</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >挂号费: 1.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='150' y='" + Convert.ToString(pos) + "' >诊疗费:4.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >自付:3.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='150' y='" + Convert.ToString(pos) + "' >医保已支付:2.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >垫付:0.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='150' y='" + Convert.ToString(pos) + "' >实收:3.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >机器编号:ZZ001</tr>";
+            s1 += "<tr font='黑体' size='11' x='150' y='" + Convert.ToString(pos) + "' >流水号:956827</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) +
+                    "' >挂号时间:2016-11-18 13:36:52</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >就诊时段:13:00--16:30</tr>";
+                        
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >支付宝卡号:133****2634</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >支付宝支付:3.00元</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) +
+                    "' >支付宝单号:20161207200080180828736</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) +
+                    "' >流水号:ZZ00100001829097793687279172</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >支付状态:支付宝支付成功</tr>";
+            
+                s1 += "<tr font='黑体' size='12' x='10' y='" + Convert.ToString(pos += 10) + "' >---------------------------------------------</tr>";
+                s1 += "<tr font='黑体' size='10' x='20' y='" + Convert.ToString(pos += 20) + "' >银联卡号：" + 123 + "</tr>";
+                s1 += "<tr font='黑体' size='10' x='20' y='" + Convert.ToString(pos += 20) + "' >银联支付：" + 123 + "</tr>";
+                s1 += "<tr font='黑体' size='10' x='20' y='" + Convert.ToString(pos += 20) + "' >银联参考号：" + 123 + "</tr>";
+                s1 += "<tr font='黑体' size='10' x='20' y='" + Convert.ToString(pos += 20) + "' >银联交易流水号：" + 123 + "</tr>";
+                s1 += "<tr font='黑体' size='10' x='20' y='" + Convert.ToString(pos += 20) + "' >银联交易状态：" + 123 + "</tr>";
+            s1 += "<tr font='黑体' size='11' x='35' y='" + Convert.ToString(pos += 30) + "' >挂号单作为退号凭证，遗失不补</tr>";
+            s1 += "<tr font='黑体' size='10' x='35' y='" + Convert.ToString(pos += 30) + "' >如需挂号收据，缴费时请提前告知收费员</tr>";
+            s1 += "<tr font='黑体' size='10' x='35' y='" + Convert.ToString(pos += 30) + "' >请患者到相应分诊台分诊报到机报到就诊</tr>";
+            s1 += "</print_info>";
+            paint(s1,"123456789",200,40,50,130);
+        }
+
      }
 }

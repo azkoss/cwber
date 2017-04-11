@@ -825,7 +825,7 @@ namespace WinFormDemo
         public const String PORT_INFO = "COM2:9600,N,8,1";//modify PINPAD COM INFO
         public const EPORT ePORT = EPORT.eCOM;//modify PINPAD COM INFO
 
-        [DllImport(DLL_PATH, EntryPoint = "AutoEnlargeKeyC", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("PinpadC.dll", EntryPoint = "AutoEnlargeKeyC", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public extern static void AutoEnlargeKeyC(System.Boolean bEnable);
 
         [DllImport(DLL_PATH, EntryPoint = "Open", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]

@@ -29,5 +29,17 @@
     <Setting Name="topMost" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="exePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E:\\融威众邦\\Test\\Test\\bin\\Debug\\你.exe</Value>
+    </Setting>
+    <Setting Name="printerName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft XPS Document Writer</Value>
+    </Setting>
+    <Setting Name="testMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="showWebError" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

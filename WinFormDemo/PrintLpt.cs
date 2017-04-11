@@ -14,6 +14,7 @@ namespace WinFormDemo
         private int height;
         private int x;
         private int y;
+        
 
 
         public string S
@@ -51,7 +52,7 @@ namespace WinFormDemo
         {
             this.xmlInfo = info;
             PrintDocument pd = new PrintDocument { PrintController = new StandardPrintController() };
-
+            pd.PrinterSettings.PrinterName = Properties.Settings.Default.printerName;
             Margins margin = new Margins(20, 20, 20, 20);
             pd.DefaultPageSettings.Margins = margin;
             pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPageGH);
