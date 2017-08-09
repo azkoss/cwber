@@ -62,8 +62,20 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>dll\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.License, Version=1.3.2.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\output\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=3.2.52.56040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\output\Spire.Pdf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.FtpClient, Version=1.0.5821.41115, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\output\System.Net.FtpClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -115,11 +127,18 @@
     <Compile Include="Form6.Designer.cs">
       <DependentUpon>Form6.cs</DependentUpon>
     </Compile>
+    <Compile Include="FtpUtil.cs" />
     <Compile Include="keybords.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="keybords.Designer.cs">
       <DependentUpon>keybords.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PdfPrintTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PdfPrintTest.Designer.cs">
+      <DependentUpon>PdfPrintTest.cs</DependentUpon>
     </Compile>
     <Compile Include="print.cs">
       <SubType>Form</SubType>
@@ -172,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="keybords.resx">
       <DependentUpon>keybords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PdfPrintTest.resx">
+      <DependentUpon>PdfPrintTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="print.resx">
       <DependentUpon>print.cs</DependentUpon>

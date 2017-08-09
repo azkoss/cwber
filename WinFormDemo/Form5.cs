@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.IO;
+using System.Net;
+using System.Net.FtpClient;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using Spire.Pdf;
 
 namespace WinFormDemo
 {
@@ -497,6 +502,15 @@ namespace WinFormDemo
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s1">打印的xml</param>
+        /// <param name="s2">条形码</param>
+        /// <param name="width">条码宽度</param>
+        /// <param name="height">条码高度</param>
+        /// <param name="x">条码x坐标</param>
+        /// <param name="y">条码的y坐标</param>
         public void paint(string s1, string s2, int width, int height, int x, int y)
         {
             string tmp1 = "";
@@ -678,6 +692,7 @@ namespace WinFormDemo
         }
         #endregion
 
+
         #region 顺义妇幼启动Lis程序
 
         public void StartLisPrint()
@@ -724,8 +739,8 @@ namespace WinFormDemo
             if (!Properties.Settings.Default.testMode)
             {
                 button2.Hide();
+                button3.Hide();
             }
-
 
             //button1.Hide();
             //MessageBox.Show();
@@ -818,5 +833,103 @@ namespace WinFormDemo
             paint(s1,"123456789",200,40,50,130);
         }
 
-     }
+
+        //获取配置文件信息
+        public string getPropertiesValue(string propertiesName)
+        {
+            string propertiesValue = null;
+            switch (propertiesName)
+            {
+                case "url":
+                    propertiesValue = Properties.Settings.Default.url;
+                    break;
+                case "width":
+                    propertiesValue = Properties.Settings.Default.width;
+                    break;
+                case "height":
+                    propertiesValue = Properties.Settings.Default.height;
+                    break;
+                case "MySqlConnectStr":
+                    propertiesValue = Properties.Settings.Default.MySqlConnectStr;
+                    break;
+                case "SSCardComPort":
+                    propertiesValue = Properties.Settings.Default.SSCardComPort;
+                    break;
+                case "UID_Type":
+                    propertiesValue = Properties.Settings.Default.UID_Type;
+                    break;
+                case "UID_Port":
+                    propertiesValue = Properties.Settings.Default.UID_Port.ToString();
+                    break;
+                case "UID_BMPDIR":
+                    propertiesValue = Properties.Settings.Default.UID_BMPDIR;
+                    break;
+                case "topMost":
+                    propertiesValue = Properties.Settings.Default.topMost.ToString();
+                    break;
+                case "exePath":
+                    propertiesValue = Properties.Settings.Default.exePath;
+                    break;
+                case "printerName":
+                    propertiesValue = Properties.Settings.Default.printerName;
+                    break;
+                case "testMode":
+                    propertiesValue = Properties.Settings.Default.testMode.ToString();
+                    break;
+                case "showWebError":
+                    propertiesValue = Properties.Settings.Default.showWebError.ToString();
+                    break;
+            }
+
+            return propertiesValue;
+        }
+        
+        /// <summary>
+        /// pdf打印，传ftp路径（大兴区医院）
+        /// </summary>
+        /// <param name="pdfFilePath">pdf文件的ftp地址</param>
+        public void paintPdfFile(string pdfFilePath)
+        {
+            FtpUtil ftpUtil = new FtpUtil();
+            ftpUtil.Download(pdfFilePath);    //下载pdf文件，下载到output/pdfFiles/pdf文件名
+
+            PdfDocument doc = new PdfDocument();
+            string printFilePath = Application.StartupPath + "\\pdfFiles\\" +
+                                   pdfFilePath.Split('/')[pdfFilePath.Split('/').Length - 1];
+            doc.LoadFromFile(printFilePath);
+
+            PrintDocument(doc, Properties.Settings.Default.printerName);
+        }
+
+        /// <summary>
+        /// pdf打印，传pdf文件路径（展会）
+        /// </summary>
+        /// <param name="pdfFilePath">pdf文件的ftp地址</param>
+        public void paintPdfFileTest(string pdfFilePath)
+        {
+            PdfDocument doc = new PdfDocument();
+            doc.LoadFromFile(pdfFilePath);
+            PrintDocument(doc, Properties.Settings.Default.printerName);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            paintPdfFile(Properties.Settings.Default.testImagePath);
+        }
+
+        private void PrintDocument(PdfDocument doc, string printername)
+        {
+            PrintDialog dialogPrint = new PrintDialog();
+
+            doc.PrinterName = printername;
+            doc.PageScaling = PdfPrintPageScaling.ActualSize;
+            //PrintDocument类是实现打印功能的核心，它封装了打印有关的属性、事件、和方法
+            PrintDocument printDoc = doc.PrintDocument;
+            printDoc.PrintController = new StandardPrintController();
+            // 获取PrinterSettings类的PrintDocument对象
+            dialogPrint.Document = printDoc;
+
+            printDoc.Print();
+        }
+    }
 }

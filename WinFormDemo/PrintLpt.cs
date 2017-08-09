@@ -14,7 +14,6 @@ namespace WinFormDemo
         private int height;
         private int x;
         private int y;
-        
 
 
         public string S
@@ -48,7 +47,7 @@ namespace WinFormDemo
         }
 
         //打印(挂号)
-        public void PrintDataGH(String info,ref String errInfo)
+        public void PrintDataGH(String info, ref String errInfo)
         {
             this.xmlInfo = info;
             PrintDocument pd = new PrintDocument { PrintController = new StandardPrintController() };
@@ -104,13 +103,13 @@ namespace WinFormDemo
                     var code = S;
                     Image image;
                     GetBarcode(width1, height1, type, code, out image);
-                    g.DrawImage(image,X,Y);
+                    g.DrawImage(image, X, Y);
                 }
-                 
+
                 if (node.Attributes != null)
                 {
                     int width = Int32.Parse("0" + node.Attributes["width"].Value);
-//                    Pen p = new Pen(Color.Blue, 2);
+                    //                    Pen p = new Pen(Color.Blue, 2);
                     Pen p = new Pen(Color.White, 2);
                     g.DrawRectangle(p, 2, 2, width, pos + 30);
                 }
@@ -168,7 +167,7 @@ namespace WinFormDemo
                 if (node.Attributes != null)
                 {
                     int width = Int32.Parse("0" + node.Attributes["width"].Value);
-//                    Pen p = new Pen(Color.Blue, 2);
+                    //                    Pen p = new Pen(Color.Blue, 2);
                     Pen p = new Pen(Color.White, 2);
                     g.DrawRectangle(p, 2, 2, width, pos + 30);
                 }
@@ -199,6 +198,6 @@ namespace WinFormDemo
             byte[] buffer = b.GetImageData(SaveTypes.GIF);//转换byte格式  
             return buffer;
         }
-        #endregion  
+        #endregion
     }
 }

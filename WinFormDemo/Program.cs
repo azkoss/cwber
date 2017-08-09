@@ -18,9 +18,18 @@ namespace WinFormDemo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form5());
+//            if (Properties.Settings.Default.testMode == true)
+//            {
+//                Application.Run(new PdfPrintTest());
+//            }
+//            else
+//            {
+                Application.Run(new Form5());
+//            }
+            
 //            Application.Run(new PrintTest());
 //            Application.Run(new TiaoXingMa());
+//            Application.Run(new PdfPrintTest());
         }
     }
 }

@@ -25,7 +25,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://baidu.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://127.0.0.1/daxing1/index.php/BinLi/Index/index")]
         public string url {
             get {
                 return ((string)(this["url"]));
@@ -134,7 +134,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft XPS Document Writer")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Print to PDF")]
         public string printerName {
             get {
                 return ((string)(this["printerName"]));
@@ -165,6 +165,66 @@ namespace WinFormDemo.Properties {
             }
             set {
                 this["showWebError"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40,0,0,0")]
+        public string printMargins {
+            get {
+                return ((string)(this["printMargins"]));
+            }
+            set {
+                this["printMargins"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ftp://123.206.31.148/pdfFiles/1708889.pdf")]
+        public string testImagePath {
+            get {
+                return ((string)(this["testImagePath"]));
+            }
+            set {
+                this["testImagePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ftp://192.168.60.91")]
+        public string ftpServer {
+            get {
+                return ((string)(this["ftpServer"]));
+            }
+            set {
+                this["ftpServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("zai1982")]
+        public string ftpUserName {
+            get {
+                return ((string)(this["ftpUserName"]));
+            }
+            set {
+                this["ftpUserName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("zaishuwei")]
+        public string ftpPassword {
+            get {
+                return ((string)(this["ftpPassword"]));
+            }
+            set {
+                this["ftpPassword"] = value;
             }
         }
     }
