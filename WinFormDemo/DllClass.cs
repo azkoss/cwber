@@ -292,7 +292,26 @@ namespace WinFormDemo
         [DllImport("dcrf32.dll")]
         public static extern short dc_reset(int icdev, uint sec);
 
+        [DllImport("dcrf32.dll")]
+        public static extern int dc_authentication(int icdev, int _Mode, int _SecNr);
 
+        [DllImport("dcrf32.dll")]
+        public static extern int dc_load_key(int icdev, int mode, int secnr, [In] byte[] nkey);  //密码装载到读写模块中
+
+        [DllImport("dcrf32.dll")]
+        public static extern int dc_load_key_hex(int icdev, int mode, int secnr, string nkey);  //密码装载到读写模块中
+
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_read(int icdev, int adr, [MarshalAs(UnmanagedType.LPStr)] StringBuilder sdata);  //从卡中读数据
+
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_read_hex(int icdev, int adr, [MarshalAs(UnmanagedType.LPStr)] StringBuilder sdata);  //从卡中读数据(转换为16进制)
+        
+        [DllImport("dcrf32.dll")]
+        public static extern int a_hex(string oldValue, ref string newValue, Int16 len);  //普通字符转换成十六进制字符
+        
+        [DllImport("dcrf32.dll")]
+        public static extern void hex_a(ref string oldValue, ref string newValue, int len);  //十六进制字符转换成普通字符
 
         private Container components = null;
         private static int _icdev = -1;
@@ -812,9 +831,330 @@ namespace WinFormDemo
         public static extern int CeGetSts(IntPtr hPortContext, out uint dwStatus, out uint dwSysErr);        //Get printer Status
         #endregion
 
+        #region  532打印机 兼容PM58T
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcOpenPrinter(int iPort, int baud, int hedshk);
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcClosePrinter();
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcPrintString(string szStr);
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSetAbsoluPrintPosition(int nL, int nH);
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcPrintBitmap(string szBmpFile, int m);
+
+        //行间距
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSetLineSpace(int iSpace);
+
+        //设定左边空白量, 左边空白量设置为 [(nL + nH ´ 256)* 0.125 毫米]
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSetLeftMargin(int nL, int nH);
+        //行起点
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSetBeginningPosition(int nNum);
+
+        //部分切纸 1,49
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSelectCutPaper(int mNum, int nNum);
+
+        //打印一行
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcPrintFeedLine();
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcRealtimeGetStatus(byte iStatus);
+
+        //int W
+        //参数W 设定放大字符宽度的倍数，取值范围为０～７，默认值为０。
+        //int H
+        //参数H 设定放大字符高度的倍数，取值范围为０～７，默认值为０。
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSelectCharacterSize(int W, int H);
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSelectHRIPosition(int nNum);     //0:不打印条码号,1:条形码上方打印条码号,2:条形码下方打印条码号
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSetBarCodeHeight(int iNum);      //条形码打印高度,1--255,默认162;
+
+        // int m
+        //参数m 的取值范围为０～８或６５～７５。如果m 取０～８参数n 将被忽略。 CODE128(m=73)
+        //int n
+        //参数n的取值范围为１～２５５。
+        //char * string
+        //参数string表示一串要打印成条形码的规定范围内的字符。
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcPrintBarCode(int m, int n, string str);  //打印条码
+
+
+        [DllImport("ThLPrinterDLL.dll")]
+        public static extern int GcSetBarCodeWidth(int nNum);       //条形码打印宽度,取值范围2--6,默认为3
+
+        public static int OpenPrinter()
+        {
+            int i = Properties.Settings.Default.EpsonPrintPort;
+            return GcOpenPrinter(i, 115200, 0);
+        }
+
+        public static int ClosePrinter()
+        {
+            return GcClosePrinter();
+        }
+
+        public static int PrintString(string str)
+        {
+            return GcPrintString(str);
+        }
+
+        public static void PrintString()
+        {
+            GcPrintFeedLine();
+        }
+
+        //获取打印机状态
+        public static string GetPrinterStatus()
+        {
+            int i;
+            string s = "";
+            i = DllClass.GcRealtimeGetStatus(1);    //00010110
+            if (i == -1)
+            {
+                s += "异常,";
+            }
+            else
+            {
+                s += "正常,";
+            }
+            i = DllClass.GcRealtimeGetStatus(2);
+            if (i == -1)
+            {
+                s += "异常,";
+            }
+            else
+            {
+                s += "正常,";
+            }
+            i = DllClass.GcRealtimeGetStatus(3);
+            if (i == -1)
+            {
+                s += "异常,";
+            }
+            else
+            {
+                s += "正常,";
+            }
+            i = DllClass.GcRealtimeGetStatus(4);
+            if (i == -1)
+            {
+                s += "异常,";
+            }
+            else
+            {
+                s += "正常,";
+            }
+            i = DllClass.GcRealtimeGetStatus(5);
+            if (i == -1)
+            {
+                s += "异常,";
+            }
+            else
+            {
+                s += "正常,";
+            }
+            return s;
+        }
+        #endregion
+
 
         #region 创自发卡器dll
+        static IntPtr _ropen = new IntPtr(0);
+        static Byte _toPosition = 0x31;
+        static Byte _fromPosition = 0x30;
+        static Byte AddrH = 0x30;
+        static Byte Addrl = 0x30;
+        private static byte _ss5;
+        private static byte _ss4;
+        private static byte _ss3;
+        private static byte _ss2;
+        private static byte _ss1;
+        private static byte _ss0;
+        private static byte _cardType;
+        private static byte _cardInfor;
 
+        [DllImport("CRT_580.dll")]
+        private static extern IntPtr CommOpenWithBaut(string port, Int32 data);
+        [DllImport("CRT_580.dll")]
+        private static extern int CommClose(IntPtr comHandle);
+        [DllImport("CRT_580.dll")]
+        private static extern int CRT580_MoveCard(IntPtr comHandle, Byte addrH, Byte addrl, Byte toPosition, Byte fromPosition);
+        [DllImport("CRT_580.dll")]
+        private static extern int CRT580_GetStatus(IntPtr comHandle, Byte addrH, Byte addrl, ref Byte ss5, ref Byte ss4, ref Byte ss3, ref Byte ss2, ref Byte ss1, ref Byte ss0);
+        [DllImport("CRT_580.dll")]
+        private static extern int CRT580_Reset(IntPtr comHandle, Byte addrH, Byte addrl);
+        [DllImport("CRT_580.dll")]
+        private static extern int CRT_IC_DetectCard(IntPtr comHandle, Byte addrH, Byte addrl, ref Byte cardType, ref Byte cardInfor);
+        [DllImport("CRT_580.dll")]
+        private static extern int RF_GetCardID(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte[] _CardID);
+        [DllImport("CRT_580.dll")]
+        private static extern int RF_ReadBlock(IntPtr ComHandle, IntPtr _AddrH, Byte _Addrl, Byte _Sec, Byte _Block, Byte[] _BlockData);
+        [DllImport("CRT_580.dll")]
+        private static extern int IC24CXX_ReadBlock(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte _CardType, int _Address, Byte _dataLen, ref Byte[] _BlockData);
+        [DllImport("CRT_580.dll")]
+        private static extern int MC_ReadTrack(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte mode, int track, Byte[] TrackData, ref int TrackDataLen);
+        public enum Fss5
+        {
+            停卡位为前端不持卡,
+            停卡位为前端持卡,
+            停卡位为射频卡卡机内操作位,
+            停卡位为ic卡操作位
+        }
+
+        public enum Fss4
+        {
+            读卡器卡口禁止进卡 = 1,
+            读卡器卡口允许磁卡进卡,
+            读卡器卡口允许ic卡进卡,
+            读卡器卡口允许磁信号进卡
+        }
+
+        public enum Fss3
+        {
+            读卡器内无卡,
+            读卡器内有卡射频卡操作位,
+            读卡器ic卡操作位有卡,
+            读卡器卡口持卡位有卡,
+            读卡器卡口不持卡位有卡,
+            读卡器有长卡,
+            读卡器有短卡,
+            后端持卡位置有卡,
+            后端不持卡位置有卡
+        }
+
+        public enum Fss2
+        {
+            发卡通道无卡,
+            发卡通道预发卡位置有卡,
+            发卡通道扩展操作位置有卡,
+            发卡通道非正常位置有卡
+        }
+
+        public enum Fss1
+        {
+            发卡箱内卡足,
+            发卡箱内卡少,
+            发卡箱内无卡
+        }
+
+        public enum Fss0
+        {
+            收卡箱卡不满,
+            收卡箱卡已满
+        }
+
+        /// <summary>
+        /// 获取状态
+        /// </summary>
+        /// <returns></returns>
+        public static int GetStatus(ref string result, ref Fss5 s5, ref Fss4 s4, ref Fss3 s3, ref Fss2 s2, ref Fss1 s1, ref Fss0 s0)
+        {
+            int retmc = CRT580_GetStatus(_ropen, AddrH, Addrl, ref _ss5, ref _ss4, ref _ss3, ref _ss2, ref _ss1, ref _ss0);
+            if (retmc == 0)
+            {
+                s5 = (Fss5)Convert.ToInt32(_ss5.ToString("x2").Substring(1, 1));
+                s4 = (Fss4)Convert.ToInt32(_ss4.ToString("x2").Substring(1, 1));
+                s3 = (Fss3)Convert.ToInt32(_ss3.ToString("x2").Substring(1, 1));
+                s2 = (Fss2)Convert.ToInt32(_ss2.ToString("x2").Substring(1, 1));
+                s1 = (Fss1)Convert.ToInt32(_ss1.ToString("x2").Substring(1, 1));
+                s0 = (Fss0)Convert.ToInt32(_ss0.ToString("x2").Substring(1, 1));
+                result = "发卡机读取状态信息成功";
+                return 0;
+            }
+            else
+            {
+                result = "发卡机读取状态信息失败";
+                return -1;
+            }
+        }
+        /// <summary>
+        /// 移动卡
+        /// </summary>
+        /// <returns></returns>
+        public static int MoveCardIn(ref string result)
+        {
+            _toPosition = 0x31;
+            _fromPosition = 0x30;
+            int retmc = CRT580_MoveCard(_ropen, AddrH, Addrl, _toPosition, _fromPosition);
+            if (retmc == 0)
+            {
+                result = "发卡机走卡成功";
+                return 0;
+            }
+            else
+            {
+                result = "发卡机走卡失败";
+                return -1;
+            }
+        }
+        /// <summary>
+        /// 出卡
+        /// </summary>
+        /// <returns></returns>
+        public static int OutCard(ref string result)
+        {
+            _toPosition = 0x33;
+            _fromPosition = 0x31;
+            int retmc = CRT580_MoveCard(_ropen, AddrH, Addrl, _toPosition, _fromPosition);
+            if (retmc == 0)
+            {
+                result = "发卡机吐卡成功";
+                return 0;
+            }
+            else
+            {
+                result = "发卡机吐卡失败";
+                return -1;
+            }
+        }
+        /// <summary>
+        /// 回收卡
+        /// </summary>
+        /// <returns></returns>
+        public static int BackCard()
+        {
+            _toPosition = 0x35;
+            _fromPosition = 0x31;
+            CRT580_MoveCard(_ropen, AddrH, Addrl, _toPosition, _fromPosition);
+            return 0;
+        }
+        /// <summary>
+        /// 测试卡片类型
+        /// </summary>
+        /// <returns></returns>
+        public static int CRT_IC_DetectCard(ref string result)
+        {
+            int retmc = CRT_IC_DetectCard(_ropen, AddrH, Addrl, ref _cardType, ref _cardInfor);
+            if (retmc == 0)
+            {
+                result = "测试发卡机中的卡片类型成功:" + Convert.ToInt32(_cardType.ToString("x2").Substring(1, 1)) + " " + Convert.ToInt32(_cardInfor.ToString("x2").Substring(1, 1));
+                return 0;
+            }
+            else
+            {
+                result = "测试发卡机中的卡片类型失败";
+                return -1;
+            }
+        }
         #endregion
 
 

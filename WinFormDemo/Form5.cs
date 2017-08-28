@@ -85,6 +85,31 @@ namespace WinFormDemo
             return CardNo;
         }
 
+        public string getSectionData(int section)
+        {
+            string sectionData = "";
+            StringBuilder temp = new StringBuilder(64);
+//            st = DllClass.dc_reset(DllClass.IcDev, 0);
+            Thread.Sleep(500);
+            if (DllClass.dc_read_hex(DllClass.IcDev, 1, temp) == 0)
+            {
+                sectionData = Decode(Convert.ToString(temp));
+            }
+            MessageBox.Show(sectionData);
+            return sectionData;
+        }
+
+        public static string Decode(string strDecode)
+        {
+            string sResult = "";
+            for (int i = 0; i < strDecode.Length / 2; i++)
+            {
+                sResult += (char)short.Parse(strDecode.Substring(i * 2, 2), global::System.Globalization.NumberStyles.HexNumber);
+            }
+            return sResult;
+        }
+
+
         #endregion
         
 
@@ -575,7 +600,256 @@ namespace WinFormDemo
             pr1.PrintDataGH(s1, ref tmp1);
         }
         #endregion
+
+        #region 获取打印机状态
+
+        #region 532 pm58t
+        public void updatePrinterStatusToDb()
+        {
+            string status = getStatus_pm58t();
+            string[] arr = status.Split(',');
+            int effect = 0;
+            DateTime timenow = DateTime.Now;
+            string sqlstr = "update devstatus set Paper_End = '" + arr[3] + "', Paper_Near_End = '无纸尽传感器', Ticket_Out = '没有出纸口检测功能', Paper_Jam = '无卡纸检测功能', Cover_Open = '" + arr[1] +
+                            "',UpdateTime = '" + timenow + "' where DevName = '" + Properties.Settings.Default.DevName + "'";
+            MySqlUtil sqlUtil = new MySqlUtil();
+            sqlUtil.RunSql(sqlstr, out effect);
+        }
+
+        public string initDevice()
+        {
+            return DllClass.OpenPrinter() == 0 ? "打印机端口打开成功" : "打印机端口打开失败";
+            Thread.Sleep(150);
+        }
+
+        public string getStatus_pm58t()
+        {
+            int i;
+            string s = "";
+            //GcRealtimeGetStatus(byte iStatus)函数说明
+            //[返回值]
+            //函数将返回打印机的状态字节iStatus，如果发生任何错误打印机都将返回-１。
+            //[参数说明]
+            //BYTE iStatus
+            //用于在内存中存放打印机的状态字节。iStatus 的取值范围为1～5。
+            //iStatus=1：打印机状态
+            //iStatus=2：打印机离线状态
+            //iStatus=3：打印机故障状态
+            //iStatus=4：打印机纸检测状态
+            //iStatus=5：送纸器状态
+            i = DllClass.GcRealtimeGetStatus(1);
+            if (i == -1)
+            {
+                s += i + "异常,";
+            }
+            else
+            {
+                //s += i + "正常,";
+                string[] str = convert(i).Split(',');
+                if (str[3] == "0")
+                {
+                    s += "联机,";
+                }
+                else
+                {
+                    s += "脱机,";
+                }
+                #region NonUse
+                //                if (str[6] == "0")
+                //                {
+                //                    s += "进纸键断开,";
+                //                }
+                //                else
+                //                {
+                //                    s += "进纸键接通,";
+                //                }
+                #endregion
+                
+            }
+
+
+            i = DllClass.GcRealtimeGetStatus(2);
+            if (i == -1)
+            {
+                s += i + "异常,";
+            }
+            else
+            {
+                // s += i + "正常,";
+                string[] str = convert(i).Split(','); //低位在前,高位在后
+                if (str[2] == "0")
+                {
+                    s += "机头抬杠已关闭,";
+                }
+                else
+                {
+                    s += "机头抬杠已打开,";
+                }
+                #region NonUse
+                //                if (str[3] == "0")
+                //                {
+                //                    s += "没有按键进纸,";
+                //                }
+                //                else
+                //                {
+                //                    s += "按键进纸中,";
+                //                }
+                //                if (str[5] == "0")
+                //                {
+                //                    s += "打印纸未用完,";
+                //                }
+                //                else
+                //                {
+                //                    s += "打印纸用完，停止打印,";
+                //                }
+                //                if (str[6] == "0")
+                //                {
+                //                    s += "没有错误,";
+                //                }
+                //                else
+                //                {
+                //                    s += "发生错误,";
+                //                }
+                #endregion
+                
+            }
+
+
+            i = DllClass.GcRealtimeGetStatus(3);
+            if (i == -1)
+            {
+                s += i + "异常,";
+            }
+            else
+            {
+                //s += i + "正常,";
+                string[] str = convert(i).Split(',');
+                #region NonUse
+                //                if (str[2] == "0")
+                //                {
+                //                    s += "没有机械错误,";
+                //                }
+                //                else
+                //                {
+                //                    s += "发生机械错误,";
+                //                }
+                #endregion
+                
+                if (str[3] == "0")
+                {
+                    s += "没有自动切纸错误,";
+                }
+                else
+                {
+                    s += "发生自动切纸错误,";
+                }
+                #region NonUse
+//                if (str[5] == "0")
+                //                {
+                //                    s += "没有不可恢复的错误,";
+                //                }
+                //                else
+                //                {
+                //                    s += "出现不可恢复的错误,";
+                //                }
+                //                if (str[6] == "0")
+                //                {
+                //                    s += "没有可自动恢复的错误,";
+                //                }
+                //                else
+                //                {
+                //                    s += "出现可自动恢复的错误,";
+                //                }
+                #endregion
+                
+            }
+
+
+            i = DllClass.GcRealtimeGetStatus(4);
+            if (i == -1)
+            {
+                s += i + "异常,";
+            }
+            else
+            {
+                //s += i + "正常,";
+                string[] str = convert(i).Split(',');
+                #region NonUse
+//                if (str[2] == "0")
+                //                {
+                //                    s += "纸将尽检测器，纸张足够,";
+                //                }
+                //                else
+                //                {
+                //                    s += "纸将尽检测器检测到纸张接近末端,";
+                //                }
+                //                if (str[3] == "0")
+                //                {
+                //                    s += "纸将尽检测器，纸张足够,";
+                //                }
+                //                else
+                //                {
+                //                    s += "纸将尽检测器检测到纸张接近末端,";
+                //                }
+                #endregion
+                
+                if (str[5] == "0")
+                {
+                    s += "纸尽传感器：有纸,";
+                }
+                else
+                {
+                    //s += "纸尽传感器检测到卷纸末端,";
+                    s += "纸尽传感器：缺纸,";
+                }
+                #region NonUse
+//                if (str[6] == "0")
+                //                {
+                //                    s += "纸尽传感器：有纸,";
+                //                }
+                //                else
+                //                {
+                //                    s += "纸尽传感器检测到卷纸末端";
+                //                }
+                #endregion
+                
+            }
+            #region NonUse
+            //            i = DllClass.GcRealtimeGetStatus(5);
+            //            if (i == -1)
+            //            {
+            //                s += i + "异常,";
+            //            }
+            //            else
+            //            {
+            //                //                s += i + "正常,";
+            //                string[] str = convert(i).Split(',');
+            //
+            //            }
+            #endregion
+            
+            return s;
+        }
+
+        public string convert(int i)
+        {
+            string j = Convert.ToString(i, 2);
+            int i1 = Convert.ToInt32(j);
+            string s = "";
+            for (int k = 0; k < 8; k++)
+            {
+                s += Convert.ToString(i1 % 10) + ",";
+                i1 /= 10;
+            }
+            return s;
+        }
+        #endregion
+
+        #region K80 M216
         
+        #endregion
+
+        #endregion
 
         #region 电动医保医保读卡器
         public void DisAllowCardIn()
@@ -730,7 +1004,8 @@ namespace WinFormDemo
             webBrowser1.ScrollBarsEnabled = false;
             webBrowser1.ObjectForScripting = this;
             webBrowser1.Navigate(Properties.Settings.Default.url);
-            if (!Properties.Settings.Default.showWebError)
+            webBrowser1.IsWebBrowserContextMenuEnabled = false; //屏蔽右键
+            if (!Properties.Settings.Default.showWebError)      
             {
                 webBrowser1.ScriptErrorsSuppressed = true;          //屏蔽脚本错误
             }
@@ -909,7 +1184,7 @@ namespace WinFormDemo
         {
             PdfDocument doc = new PdfDocument();
             doc.LoadFromFile(pdfFilePath);
-            PrintDocument(doc, Properties.Settings.Default.printerName);
+            PrintDocument(doc, Properties.Settings.Default.a5PrinterName);
         }
 
         private void button3_Click(object sender, EventArgs e)

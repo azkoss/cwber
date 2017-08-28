@@ -57,10 +57,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_2);
             // 
-            // printDocument1
-            // 
-//            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
-            // 
             // button3
             // 
             resources.ApplyResources(this.button3, "button3");
