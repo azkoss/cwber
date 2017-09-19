@@ -134,6 +134,7 @@
     <Compile Include="keybords.Designer.cs">
       <DependentUpon>keybords.cs</DependentUpon>
     </Compile>
+    <Compile Include="MySqlUtil.cs" />
     <Compile Include="PdfPrintTest.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -976,6 +976,94 @@ namespace WinFormDemo
         }
         #endregion
 
+        #region 讯普打印机接口
+        [DllImport("PrinterDLL.dll")]
+        public static extern IntPtr Printer_Port_Open(String strPortName, Int32 lBaudRate, Int32 lPortType);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Port_Close(IntPtr hPrinterID);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Control_CutPaper(IntPtr hPrinterID, Int32 iType, Int32 iLines);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Control_CashDraw(IntPtr hPrinterID, Int32 iNum, Int32 iTimeOn, Int32 iTimeOff);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Control_BlackMark(IntPtr hPrinterID);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Control_FeedLines(IntPtr hPrinterID, Int32 iDotLines);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Control_BackLines(IntPtr hPrinterID, Int32 iDotLines);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_Reset(IntPtr hPrinterID);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_Encoding(IntPtr hPrinterID, Int32 lEncoding);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_Font(IntPtr hPrinterID, Int32 iFont, Boolean bBold, Boolean bDoubleWidth, Boolean bDoubleHeight, Boolean bUnderLine);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_FontSize(IntPtr hPrinterID, Int32 iWidth, Int32 iHeight);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_OppositeColor(IntPtr hPrinterID, Boolean bOppsite);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_FontBold(IntPtr hPrinterID, Boolean bBold);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_AlignType(IntPtr hPrinterID, Int32 lAlignType);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_LeftMargin(IntPtr hPrinterID, Int32 iLeftMargin);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_RightMargin(IntPtr hPrinterID, Int32 iRightMargin);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_LineSpace(IntPtr hPrinterID, Int32 iSpace);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_BlackMarkValue(IntPtr hPrinterID, Int32 iType, Int32 iDir, Int32 lOffset);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Set_BmpInFlash(IntPtr hPrinterID, Int32 iNumber, String lpFilePath);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_String(IntPtr hPrinterID, String lpStr);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_Data(IntPtr hPrinterID, String lpBuffer, Int32 iLength);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_File(IntPtr hPrinterID, String lpFilePath);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_Logo(IntPtr hPrinterID, Int32 iNumber);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_Bitmap(IntPtr hPrinterID, Int32 iType, String lpFilePath);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_BmpInFlash(IntPtr hPrinterID, Int32 iNumber, Int32 iType);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_Barcode(IntPtr hPrinterID, Int32 iType, Int32 iWidth, Int32 iHeight, Int32 iHRI, String lpString);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Boolean Printer_Output_QR(IntPtr hPrinterID, Int32 iWidth, String lpString);
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Int32 Printer_Query_Version();
+
+        [DllImport("PrinterDLL.dll")]
+        public static extern Int32 Printer_Query_Status(IntPtr hPrinterID, Int32 iType);
+        #endregion
 
         #region 创自发卡器dll
         static IntPtr _ropen = new IntPtr(0);

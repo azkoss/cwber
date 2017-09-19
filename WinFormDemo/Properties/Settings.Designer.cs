@@ -134,7 +134,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Print to PDF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("CUSTOM K80")]
         public string printerName {
             get {
                 return ((string)(this["printerName"]));
@@ -225,6 +225,66 @@ namespace WinFormDemo.Properties {
             }
             set {
                 this["ftpPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Print to PDF")]
+        public string a5PrinterName {
+            get {
+                return ((string)(this["a5PrinterName"]));
+            }
+            set {
+                this["a5PrinterName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CUSTOM M216")]
+        public string Setting {
+            get {
+                return ((string)(this["Setting"]));
+            }
+            set {
+                this["Setting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int EpsonPrintPort {
+            get {
+                return ((int)(this["EpsonPrintPort"]));
+            }
+            set {
+                this["EpsonPrintPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string DevName {
+            get {
+                return ((string)(this["DevName"]));
+            }
+            set {
+                this["DevName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\LABKING\\\\DataReceive.exe")]
+        public string LisPrintInterfacePath {
+            get {
+                return ((string)(this["LisPrintInterfacePath"]));
+            }
+            set {
+                this["LisPrintInterfacePath"] = value;
             }
         }
     }

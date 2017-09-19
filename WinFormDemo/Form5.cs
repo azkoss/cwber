@@ -849,6 +849,171 @@ namespace WinFormDemo
         
         #endregion
 
+        #region 迅普打印机
+        private const Int32 C_PRINTER_PORT_COM = 0;				// 打印机端口类型 串口
+        private const Int32 C_PRINTER_PORT_LPT = 1;				// 打印机端口类型 并口
+        private const Int32 C_PRINTER_PORT_USB = 2;				// 打印机端口类型 USB
+        private const Int32 C_PRINTER_PORT_NET = 3;				// (预留)打印机端口类型 网口
+        private const Int32 C_PRINTER_PORT_VLPT = 4;			// 打印机端口类型 虚拟并口
+        // 常量定义-裁纸方式
+        private const Int32 C_PRINTER_CUT_FULL = 0;				// 全切
+        private const Int32 C_PRINTER_CUT_PART = 1;				// 半切
+        //  常量定义-字符编码
+        private const Int32 C_PRINTER_ENCODING_ASCII = 0;		// ASCII编码
+        private const Int32 C_PRINTER_ENCODING_GB2312 = 1;		// GB2312编码
+        private const Int32 C_PRINTER_ENCODING_GB18030 = 2;		// GB18030编码
+        // 常量定义-点阵大小
+        private const Int32 C_PRINTER_FONT_24 = 0;				// 24点阵汉字
+        private const Int32 C_PRINTER_FONT_16 = 1;				// 16点阵汉字
+        // 常量定义-对齐方式
+        private const Int32 C_PRINTER_ALIGN_LEFT = 0;			// 居左对齐
+        private const Int32 C_PRINTER_ALIGN_CENTER = 1;			// 居中对齐
+        private const Int32 C_PRINTER_ALIGN_RIGHT = 2;			// 居右对齐
+        //  常量定义-黑标参数
+        private const Int32 C_PRINTER_BM_MOVE = 1;				// 起始位置的设定值
+        private const Int32 C_PRINTER_BM_CUT = 2;				// 裁纸位置的设定值
+        private const Int32 C_PRINTER_BM_FORWARD = 0;			// 进纸的方向
+        private const Int32 C_PRINTER_BM_BACK = 1;				// 倒纸的方向
+        //  常量定义-BMP位图模式
+        private const Int32 C_PRINTER_BMP_8 = 0;				// 8点单密度
+        private const Int32 C_PRINTER_BMP_8D = 1;				// 8点双密度
+        private const Int32 C_PRINTER_BMP_24 = 32;				// 24点单密度
+        private const Int32 C_PRINTER_BMP_24D = 33;				// 24点双密度
+        // 一维条形码类型常量
+        private const Int32 C_PRINTER_BARCODE_EAN13 = 2;		// EAN13条形码
+        private const Int32 C_PRINTER_BARCODE_CODE39 = 69;		// CODE39条形码
+        private const Int32 C_PRINTER_BARCODE_CODE128 = 73;		// CODE128条形码
+        // 一维条形码人工识别字符位置常量
+        private const Int32 C_PRINTER_HRI_NONE = 0;				// 不打印HRI字符
+        private const Int32 C_PRINTER_HRI_TOP = 1;				// 在条形码上方打印HRI字符
+        private const Int32 C_PRINTER_HRI_BOTTOM = 2;			// 在条形码下方打印HRI字符
+        private const Int32 C_PRINTER_HRI_BOTH = 3;				// 在条形码上方和下方打印HRI字符
+        // 打印机状态类型常量
+        private const Int32 C_PRINTER_STATUS_ONLINE = 1;		// 在线离线状态
+        private const Int32 C_PRINTER_STATUS_DOOR = 2;			// 纸仓门状态
+        private const Int32 C_PRINTER_STATUS_CUT = 3;			// 裁纸器状态
+        private const Int32 C_PRINTER_STATUS_PAPER = 4;			// 纸卷状态
+        private const Int32 C_PRINTER_STATUS_HEAT = 5;			// (预留)发热片状态
+        private const Int32 C_PRINTER_STATUS_BUFFER = 6;		// (预留)缓存区状态
+        private const Int32 C_PRINTER_STATUS_DRAWER = 7;		// (预留)钱箱状态
+        private const Int32 C_PRINTER_STATUS_JAM = 8;			// 卡纸状态
+
+        IntPtr hPrinter = IntPtr.Zero;
+
+        public string xunPuPrinterGetStatus()
+        {
+            string status = "";
+            if (hPrinter == IntPtr.Zero)
+            {
+                hPrinter = DllClass.Printer_Port_Open("", 0, C_PRINTER_PORT_USB);
+            }
+            int sta = 0;
+            if (hPrinter.ToInt32() != -1)
+            {
+#if false
+                //==离线检测===============================================
+                sta = Printer_Query_Status(hPrinter, C_PRINTER_STATUS_ONLINE);
+                if (0x10 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "请先打开打印机");
+                }
+                else if (0x16 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机联机");
+                }
+                else if (0x1e == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机脱机");
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机返回值错误");
+                }
+
+                //==抬杆检测===============================================
+                sta = Printer_Query_Status(hPrinter, C_PRINTER_STATUS_DOOR);
+                if (0x10 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "请先打开打印机");
+                }
+                else if (0x12 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机抬杆正常");
+                }
+                else if (0x16 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机抬杆异常");
+                }
+                else if (0x32 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机抬杆正常但缺纸");
+                }
+                else if (0x36 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机抬杆异常且缺纸");
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机返回值错误");
+                }
+
+                //==切刀检测===============================================
+                sta = Printer_Query_Status(hPrinter, C_PRINTER_STATUS_CUT);
+                if (0x10 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "请先打开打印机");
+                }
+                else if (0x12 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机切刀正常");
+                }
+                else if (0x16 == sta)
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机切刀异常");
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机返回值错误");
+                }
+#endif
+                //==纸状态检测===============================================
+                sta = DllClass.Printer_Query_Status(hPrinter, C_PRINTER_STATUS_PAPER);
+                if (0x10 == sta)
+                {
+//                    MessageBox.Show(string.Format("0x{0:X00}", sta), "请先打开打印机");
+                    status = "请先打开打印机";
+                }
+                else if (0x12 == sta)
+                {
+//                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机有纸且充足");
+                    status = "打印机有纸且充足";
+                }
+                else if (0x1e == sta)
+                {
+//                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机有纸但将尽");
+                    status = "打印机有纸但将尽";
+                }
+                else if (0x72 == sta)
+                {
+//                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机无纸但充足");
+                    status = "打印机无纸但充足";
+                }
+                else if (0x7e == sta)
+                {
+//                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机无纸且将尽");
+                    status = "打印机无纸且将尽";
+                }
+                else
+                {
+//                    MessageBox.Show(string.Format("0x{0:X00}", sta), "打印机返回值错误");
+                    status = "打印机返回值错误";
+                }
+
+            }
+            return status;
+        }
+
+        #endregion
         #endregion
 
         #region 电动医保医保读卡器
@@ -993,6 +1158,45 @@ namespace WinFormDemo
         }
         #endregion
 
+        #region 调用cmd执行lis打印接口
+        /// <summary>
+        /// 运行cmd命令
+        /// 不显示命令窗口
+        /// </summary>
+        /// <param name="cmdStr">病人id号</param>
+        static bool RunCmd2(string cmdStr)
+        {
+            bool result = false;
+            try
+            {
+                using (Process myPro = new Process())
+                {
+                    myPro.StartInfo.FileName = "cmd.exe";
+                    myPro.StartInfo.UseShellExecute = false;
+                    myPro.StartInfo.RedirectStandardInput = true;
+                    myPro.StartInfo.RedirectStandardOutput = true;
+                    myPro.StartInfo.RedirectStandardError = true;
+                    myPro.StartInfo.CreateNoWindow = true;
+                    myPro.Start();
+                    //如果调用程序路径中有空格时，cmd命令执行失败，可以用双引号括起来 ，在这里两个引号表示一个引号（转义）
+                    string str = string.Format(@"""{0}"" {1} {2}", Properties.Settings.Default.LisPrintInterfacePath, cmdStr, "&exit");
+                  
+                    myPro.StandardInput.WriteLine(str);
+                    myPro.StandardInput.AutoFlush = true;
+                    myPro.WaitForExit();
+
+                    result = true;
+                }
+            }
+            catch
+            {
+
+            }
+            return result;
+        }
+
+        #endregion
+
         private void Form5_Load(object sender, EventArgs e)
         {
             //没有标题
@@ -1015,6 +1219,7 @@ namespace WinFormDemo
             {
                 button2.Hide();
                 button3.Hide();
+                button4.Hide();
             }
 
             //button1.Hide();
@@ -1205,6 +1410,11 @@ namespace WinFormDemo
             dialogPrint.Document = printDoc;
 
             printDoc.Print();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(xunPuPrinterGetStatus());
         }
     }
 }

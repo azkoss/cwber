@@ -33,7 +33,7 @@
       <Value Profile="(Default)">E:\\融威众邦\\Test\\Test\\bin\\Debug\\你.exe</Value>
     </Setting>
     <Setting Name="printerName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Microsoft Print to PDF</Value>
+      <Value Profile="(Default)">CUSTOM K80</Value>
     </Setting>
     <Setting Name="testMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -55,6 +55,21 @@
     </Setting>
     <Setting Name="ftpPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">zaishuwei</Value>
+    </Setting>
+    <Setting Name="a5PrinterName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft Print to PDF</Value>
+    </Setting>
+    <Setting Name="Setting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CUSTOM M216</Value>
+    </Setting>
+    <Setting Name="EpsonPrintPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="DevName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="LisPrintInterfacePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\\LABKING\\DataReceive.exe</Value>
     </Setting>
   </Settings>
 </SettingsFile>
