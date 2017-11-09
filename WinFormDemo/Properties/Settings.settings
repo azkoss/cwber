@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="url" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://127.0.0.1/daxing1/index.php/BinLi/Index/index</Value>
+      <Value Profile="(Default)">http://223.223.223.196/daxing_fuyou/mz/index.php/ZiZhu/Index/index/id/ZZ001</Value>
     </Setting>
     <Setting Name="width" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1024</Value>
@@ -15,7 +15,7 @@
       <Value Profile="(Default)">server=192.168.0.173;database='menzhen';userid=root;password='trans';Charset='utf8'</Value>
     </Setting>
     <Setting Name="SSCardComPort" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM1</Value>
+      <Value Profile="(Default)">COM4</Value>
     </Setting>
     <Setting Name="UID_Type" Type="System.String" Scope="User">
       <Value Profile="(Default)">USERIDCARD</Value>
@@ -33,7 +33,7 @@
       <Value Profile="(Default)">E:\\融威众邦\\Test\\Test\\bin\\Debug\\你.exe</Value>
     </Setting>
     <Setting Name="printerName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">CUSTOM K80</Value>
+      <Value Profile="(Default)">Microsoft Print to PDF</Value>
     </Setting>
     <Setting Name="testMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -59,9 +59,6 @@
     <Setting Name="a5PrinterName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Microsoft Print to PDF</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
-      <Value Profile="(Default)">CUSTOM M216</Value>
-    </Setting>
     <Setting Name="EpsonPrintPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
@@ -69,7 +66,19 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="LisPrintInterfacePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\LABKING\\DataReceive.exe</Value>
+      <Value Profile="(Default)">C:\\labking\\DataReceiver.exe</Value>
+    </Setting>
+    <Setting Name="Crt580ComPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM5</Value>
+    </Setting>
+    <Setting Name="Crt580ComBaudrate" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">38400</Value>
+    </Setting>
+    <Setting Name="Led_Port" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM6</Value>
+    </Setting>
+    <Setting Name="zzj_value" Type="System.String" Scope="User">
+      <Value Profile="(Default)">zzj001</Value>
     </Setting>
   </Settings>
 </SettingsFile>

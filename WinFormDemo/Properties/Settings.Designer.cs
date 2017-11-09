@@ -25,7 +25,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://127.0.0.1/daxing1/index.php/BinLi/Index/index")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://223.223.223.196/daxing_fuyou/mz/index.php/ZiZhu/Index/index/id/ZZ001")]
         public string url {
             get {
                 return ((string)(this["url"]));
@@ -62,7 +62,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM4")]
         public string SSCardComPort {
             get {
                 return ((string)(this["SSCardComPort"]));
@@ -134,7 +134,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("CUSTOM K80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Print to PDF")]
         public string printerName {
             get {
                 return ((string)(this["printerName"]));
@@ -242,18 +242,6 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("CUSTOM M216")]
-        public string Setting {
-            get {
-                return ((string)(this["Setting"]));
-            }
-            set {
-                this["Setting"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int EpsonPrintPort {
             get {
@@ -278,13 +266,61 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\LABKING\\\\DataReceive.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\labking\\\\DataReceiver.exe")]
         public string LisPrintInterfacePath {
             get {
                 return ((string)(this["LisPrintInterfacePath"]));
             }
             set {
                 this["LisPrintInterfacePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM5")]
+        public string Crt580ComPort {
+            get {
+                return ((string)(this["Crt580ComPort"]));
+            }
+            set {
+                this["Crt580ComPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("38400")]
+        public int Crt580ComBaudrate {
+            get {
+                return ((int)(this["Crt580ComBaudrate"]));
+            }
+            set {
+                this["Crt580ComBaudrate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM6")]
+        public string Led_Port {
+            get {
+                return ((string)(this["Led_Port"]));
+            }
+            set {
+                this["Led_Port"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("zzj001")]
+        public string zzj_value {
+            get {
+                return ((string)(this["zzj_value"]));
+            }
+            set {
+                this["zzj_value"] = value;
             }
         }
     }

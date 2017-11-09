@@ -1066,40 +1066,40 @@ namespace WinFormDemo
         #endregion
 
         #region 创自发卡器dll
-        static IntPtr _ropen = new IntPtr(0);
-        static Byte _toPosition = 0x31;
-        static Byte _fromPosition = 0x30;
-        static Byte AddrH = 0x30;
-        static Byte Addrl = 0x30;
-        private static byte _ss5;
-        private static byte _ss4;
-        private static byte _ss3;
-        private static byte _ss2;
-        private static byte _ss1;
-        private static byte _ss0;
-        private static byte _cardType;
-        private static byte _cardInfor;
+        public static IntPtr _ropen = CommOpenWithBaut(Settings.Default.Crt580ComPort,Settings.Default.Crt580ComBaudrate);
+        public static Byte _toPosition = 0x31;
+        public static Byte _fromPosition = 0x30;
+        public static Byte AddrH = 0x30;
+        public static Byte Addrl = 0x30;
+        public static byte _ss5;
+        public static byte _ss4;
+        public static byte _ss3;
+        public static byte _ss2;
+        public static byte _ss1;
+        public static byte _ss0;
+        public static byte _cardType;
+        public static byte _cardInfor;
 
         [DllImport("CRT_580.dll")]
-        private static extern IntPtr CommOpenWithBaut(string port, Int32 data);
+        public static extern IntPtr CommOpenWithBaut(string port, Int32 data);
         [DllImport("CRT_580.dll")]
-        private static extern int CommClose(IntPtr comHandle);
+        public static extern int CommClose(IntPtr comHandle);
         [DllImport("CRT_580.dll")]
-        private static extern int CRT580_MoveCard(IntPtr comHandle, Byte addrH, Byte addrl, Byte toPosition, Byte fromPosition);
+        public static extern int CRT580_MoveCard(IntPtr comHandle, Byte addrH, Byte addrl, Byte toPosition, Byte fromPosition);
         [DllImport("CRT_580.dll")]
-        private static extern int CRT580_GetStatus(IntPtr comHandle, Byte addrH, Byte addrl, ref Byte ss5, ref Byte ss4, ref Byte ss3, ref Byte ss2, ref Byte ss1, ref Byte ss0);
+        public static extern int CRT580_GetStatus(IntPtr comHandle, Byte addrH, Byte addrl, ref Byte ss5, ref Byte ss4, ref Byte ss3, ref Byte ss2, ref Byte ss1, ref Byte ss0);
         [DllImport("CRT_580.dll")]
-        private static extern int CRT580_Reset(IntPtr comHandle, Byte addrH, Byte addrl);
+        public static extern int CRT580_Reset(IntPtr comHandle, Byte addrH, Byte addrl);
         [DllImport("CRT_580.dll")]
-        private static extern int CRT_IC_DetectCard(IntPtr comHandle, Byte addrH, Byte addrl, ref Byte cardType, ref Byte cardInfor);
+        public static extern int CRT_IC_DetectCard(IntPtr comHandle, Byte addrH, Byte addrl, ref Byte cardType, ref Byte cardInfor);
         [DllImport("CRT_580.dll")]
-        private static extern int RF_GetCardID(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte[] _CardID);
+        public static extern int RF_GetCardID(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte[] _CardID);
         [DllImport("CRT_580.dll")]
-        private static extern int RF_ReadBlock(IntPtr ComHandle, IntPtr _AddrH, Byte _Addrl, Byte _Sec, Byte _Block, Byte[] _BlockData);
+        public static extern int RF_ReadBlock(IntPtr ComHandle, IntPtr _AddrH, Byte _Addrl, Byte _Sec, Byte _Block, Byte[] _BlockData);
         [DllImport("CRT_580.dll")]
-        private static extern int IC24CXX_ReadBlock(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte _CardType, int _Address, Byte _dataLen, ref Byte[] _BlockData);
+        public static extern int IC24CXX_ReadBlock(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte _CardType, int _Address, Byte _dataLen, ref Byte[] _BlockData);
         [DllImport("CRT_580.dll")]
-        private static extern int MC_ReadTrack(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte mode, int track, Byte[] TrackData, ref int TrackDataLen);
+        public static extern int MC_ReadTrack(IntPtr ComHandle, Byte _AddrH, Byte _Addrl, Byte mode, int track, Byte[] TrackData, ref int TrackDataLen);
         public enum Fss5
         {
             停卡位为前端不持卡,

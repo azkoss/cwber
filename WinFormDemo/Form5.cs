@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.IO;
+using System.IO.Ports;
+using System.Linq;
 using System.Net;
 using System.Net.FtpClient;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using Spire.Pdf;
+using WinFormDemo.Properties;
 
 namespace WinFormDemo
 {
@@ -1048,7 +1052,157 @@ namespace WinFormDemo
             DllClass.Xd();
         }
 	    #endregion
-        
+
+        #region 发卡机接口
+        public string Crt580ComOpen()
+        {
+            return !DllClass._ropen.Equals((object)IntPtr.Zero) ? "打开发卡机串口成功" : "打开发卡机串口失败,读卡器端口被占用，或者端口错误";
+        }
+
+        public string Crt580CheckDevice()
+        {
+            string result = "";
+            DllClass.Fss5 s5 = DllClass.Fss5.停卡位为前端不持卡;
+            DllClass.Fss4 s4 = (DllClass.Fss4)0;
+            DllClass.Fss3 s3 = DllClass.Fss3.读卡器内无卡;
+            DllClass.Fss2 s2 = DllClass.Fss2.发卡通道无卡;
+            DllClass.Fss1 s1 = DllClass.Fss1.发卡箱内卡足;
+            DllClass.Fss0 s0 = DllClass.Fss0.收卡箱卡不满;
+            int i = DllClass.GetStatus(ref result, ref s5, ref s4, ref s3, ref s2, ref s1, ref s0);
+            string s;
+            if (i == 0)
+            {
+                s = s3 + "," + s2 + "," + s1 + "," + s0;
+            }
+            else
+            {
+                s = "发卡机状态获取失败";
+            }
+            return s;
+            /*string result = "";
+            DllClass.Fss5 s5 = DllClass.Fss5.停卡位为前端不持卡;
+            DllClass.Fss4 s4 = (DllClass.Fss4)0;
+            DllClass.Fss3 s3 = DllClass.Fss3.读卡器内无卡;
+            DllClass.Fss2 s2 = DllClass.Fss2.发卡通道无卡;
+            DllClass.Fss1 s1 = DllClass.Fss1.发卡箱内卡足;
+            DllClass.Fss0 s0 = DllClass.Fss0.收卡箱卡不满;
+            if (DllClass.GetStatus(ref result, ref s5, ref s4, ref s3, ref s2, ref s1, ref s0) != 0)
+                return "发卡机状态获取失败";
+            return "发卡机状态获取成功" + (object)"," + (string)(object)s5 + "," + (string)(object)s4 + "," + (string)(object)s3 + "," + (string)(object)s2 + "," + (string)(object)s1 + "," + (string)(object)s0;
+*/
+        }
+
+        public string Crt580MoveInCard()
+        {
+            DllClass._toPosition = 0x31;
+            DllClass._fromPosition = 0x30;
+            return DllClass.CRT580_MoveCard(DllClass._ropen, DllClass.AddrH, DllClass.Addrl, DllClass._toPosition, DllClass._fromPosition) != 0 ? "发卡机走卡失败" : "发卡机走卡成功";
+        }
+
+        public string Crt580ReadCardNo()
+        {
+            string cardNo = "";
+            byte _mode = 0x30;
+            byte _track = 0x32;
+            byte[] _TrackData = new byte[16];
+            int _TrackDataLen = 0;
+            int i = DllClass.MC_ReadTrack(DllClass._ropen, DllClass.AddrH, DllClass.Addrl, _mode, _track, _TrackData, ref _TrackDataLen);   //读取磁卡卡号
+            if (i == 0)
+            {
+                byte[] track2Data = _TrackData.Skip(5).Take(8).ToArray();
+                cardNo = Ascii2Str(track2Data);
+            }
+            return cardNo;
+        }
+
+        public static string Ascii2Str(byte[] buf)
+        {
+            return System.Text.Encoding.ASCII.GetString(buf);
+        } 
+
+        public string Crt580MoveOutCard()
+        {
+            DllClass._toPosition = 0x33;
+            DllClass._fromPosition = 0x31;
+            return DllClass.CRT580_MoveCard(DllClass._ropen, DllClass.AddrH, DllClass.Addrl, DllClass._toPosition, DllClass._fromPosition) != 0 ? "发卡机吐卡失败" : "发卡机吐卡成功";
+        }
+
+        public string Crt580RecyleCard()
+        {
+            return DllClass.BackCard() == 0 ? "回收卡成功" : "回收卡失败";
+        }
+
+        public string Crt580DeInit()
+        {
+            return DllClass.CommClose(Convert.ToUInt32(DllClass._ropen)) != 0 ? "关闭发卡机串口成功" : "关闭发卡机串口成功";
+        }
+
+        #endregion
+
+        #region 灯带接口
+        public string Ledinit()
+        {
+            this._Comm = new SerialPort();
+            this._Comm.BaudRate = 9600;
+            this._Comm.Parity = Parity.None;
+            this._Comm.DataBits = 8;
+            this._Comm.StopBits = StopBits.One;
+            this._Comm.PortName = Settings.Default.Led_Port;
+            this._Comm.ReceivedBytesThreshold = 1;
+            string str;
+            try
+            {
+                this._Comm.Open();
+                str = "初始化串口成功";
+            }
+            catch (Exception ex)
+            {
+                str = "初始化串口失败";
+            }
+            return str;
+        }
+
+        /// <summary>
+        ///主机控制命令格式：FE XX(0B关闭LED 1B关闭所有LED 2B闪烁LED 3B常亮LED 4B常亮所有LED) XX(01-07共7路指示灯) 73 73 FF
+        ///控制板响应命令格式： FE 1C 73 73 73 FF (表示控制命令执行成功) FE 0C 73 73 73 FF (表示控制命令执行失败)
+        /// </summary>
+        /// <param name="ledNo">灯带序号,1--7</param>
+        /// <param name="ledOrder">灯带命令,1点亮,2闪烁,3熄灭,4全灭,5,全亮</param>
+        public void send(int ledNo, int ledOrder)
+        {
+            Converter converter = new Converter();
+            for (int i = 1; i < 8; i++)
+            {
+                if (i == ledNo)
+                {
+                    byte[] sendbyte = new Byte[6];
+                    if (ledOrder == 1) //点亮
+                    {
+                        sendbyte = new Byte[] {0XFE, 0X3B, converter.convert(ledNo), 0X73, 0X73, 0XFF};
+                    }
+                    else if (ledOrder == 2) //闪烁
+                    {
+                        sendbyte = new Byte[] {0XFE, 0X2B, converter.convert(ledNo), 0X73, 0X73, 0XFF};
+                    }
+                    else if (ledOrder == 3) //熄灭
+                    {
+                        sendbyte = new Byte[] {0XFE, 0X0B, converter.convert(ledNo), 0X73, 0X73, 0XFF};
+                    }
+                    else if (ledOrder == 4) //全部熄灭
+                    {
+                        sendbyte = new Byte[] {0XFE, 0X1B, converter.convert(ledNo), 0X73, 0X73, 0XFF};
+                    }
+                    else if (ledOrder == 5) //全部点亮
+                    {
+                        sendbyte = new Byte[] {0XFE, 0X4B, converter.convert(ledNo), 0X73, 0X73, 0XFF};
+                    }
+                    _Comm.Write(sendbyte, 0, 6);
+                }
+                Thread.Sleep(100);
+            }
+        }
+
+        #endregion
 
         #region 二代身份证读卡器
         public int HDinit(int port)
@@ -1066,7 +1220,8 @@ namespace WinFormDemo
             return DllClass.HD_CloseComm();
         }
 
-        public string HDread()
+        //海淀医院
+         public string HDread()
         {
             int retval = 0;
             string pBmpFile = @"./zp.bmp";
@@ -1132,6 +1287,21 @@ namespace WinFormDemo
         #endregion
 
 
+        #region 读取txt文件，|表示换行
+        public string readText(string path)
+        {
+            StreamReader sr = new StreamReader(path, Encoding.Default);
+            string result = "";
+            String line = "";
+            while ((line = sr.ReadLine()) != null)
+            {
+                result += line + "|";
+            }
+//            MessageBox.Show(result);
+            return result;
+        }
+        #endregion
+
         #region 顺义妇幼启动Lis程序
 
         public void StartLisPrint()
@@ -1164,7 +1334,7 @@ namespace WinFormDemo
         /// 不显示命令窗口
         /// </summary>
         /// <param name="cmdStr">病人id号</param>
-        static bool RunCmd2(string cmdStr)
+        public bool RunCmd2(string cmdStr)
         {
             bool result = false;
             try
@@ -1197,19 +1367,86 @@ namespace WinFormDemo
 
         #endregion
 
+        #region 手写输入法
+
+        public void runHandInput()
+        {
+            string appPath = Application.StartupPath + "\\HandInput\\1.1.0.282\\handinput.exe";
+            ProcessStartInfo process = new ProcessStartInfo
+            {
+                FileName = appPath,
+                Arguments = "process 1",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true
+            };
+            Process.Start(process);
+        }
+
+        private void RunCmd(string command)
+        {
+            //实例一个Process类，启动一个独立进程
+            Process p = new Process
+            {//Process类有一个StartInfo属性
+                StartInfo =
+                {
+                    FileName = "cmd.exe",           //设定程序名
+                    Arguments = "/c " + command,    //设定程式执行参数
+                    UseShellExecute = false,        //关闭Shell的使用
+                    RedirectStandardInput = true,   //重定向标准输入
+                    RedirectStandardOutput = true,  //重定向标准输出 
+                    RedirectStandardError = true,   //重定向错误输出 
+                    CreateNoWindow = true          //设置不显示窗口
+                }
+            };
+            p.Start();      //启动
+            //也可以用这种方式输入要执行的命令
+            //不过要记得加上Exit要不然下一行程式执行的时候会当机
+            //p.StandardInput.WriteLine(command);
+            //p.StandardInput.WriteLine("exit"); 
+            //从输出流取得命令执行结果
+            p.StandardOutput.ReadToEnd();
+        }
+
+        public void stopHandInput()
+        {
+            RunCmd("taskkill /f /im handinput.exe");
+        }
+        /*private string webtextboxid = "";
+        //事件处理方法
+        void frm_TransfEvent(string value)
+        {
+            HtmlElement textboxValue = webBrowser1.Document.All[webtextboxid];
+            textboxValue.SetAttribute("value", value);
+        }
+
+        public void getHandWritingValue(string id)
+        {
+            webtextboxid = id;
+            HandWrite frm = new HandWrite();
+            //注册事件
+            frm.TransfEvent += frm_TransfEvent;
+            frm.ShowDialog();
+        }*/
+        #endregion
+
         private void Form5_Load(object sender, EventArgs e)
         {
+            Crt580ComOpen();
             //没有标题
             this.FormBorderStyle = FormBorderStyle.None;
             //任务栏不显示
             this.ShowInTaskbar = false;
-            this.Height = int.Parse(WinFormDemo.Properties.Settings.Default.height);
-            this.Width = int.Parse(WinFormDemo.Properties.Settings.Default.width);
+            WindowState = FormWindowState.Maximized;
+            Width = Convert.ToInt32(Properties.Settings.Default.width);
+            Height = Convert.ToInt32(Properties.Settings.Default.height);
+            webBrowser1.Width = Width;
+            webBrowser1.Height = Height;
             webBrowser1.ScrollBarsEnabled = false;
             webBrowser1.ObjectForScripting = this;
             webBrowser1.Navigate(Properties.Settings.Default.url);
-            webBrowser1.IsWebBrowserContextMenuEnabled = false; //屏蔽右键
-            if (!Properties.Settings.Default.showWebError)      
+
+            if (!Properties.Settings.Default.showWebError)
             {
                 webBrowser1.ScriptErrorsSuppressed = true;          //屏蔽脚本错误
             }
@@ -1217,18 +1454,19 @@ namespace WinFormDemo
 
             if (!Properties.Settings.Default.testMode)
             {
-                button2.Hide();
-                button3.Hide();
-                button4.Hide();
+                webBrowser1.IsWebBrowserContextMenuEnabled = false; //屏蔽右键
             }
+
+            Ledinit();
 
             //button1.Hide();
             //MessageBox.Show();
             //sfz_card_read();
         }
 
+        #region 测试
         
-
+        #endregion
 //        private void button1_Click(object sender, EventArgs e)
 //        {
 //            PrtJzDateCreatGuaHao("三层西南侧", "下午", "35", "000089035800", "120305113800", "神经内科门诊", "专科", "张曙光", "男", "60岁", "普通医保",
@@ -1359,6 +1597,9 @@ namespace WinFormDemo
                 case "showWebError":
                     propertiesValue = Properties.Settings.Default.showWebError.ToString();
                     break;
+                case "zzj_value":
+                    propertiesValue = Properties.Settings.Default.zzj_value.ToString();
+                    break;
             }
 
             return propertiesValue;
@@ -1415,6 +1656,36 @@ namespace WinFormDemo
         private void button4_Click(object sender, EventArgs e)
         {
             MessageBox.Show(xunPuPrinterGetStatus());
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string s = HDread();
+            MessageBox.Show(s);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string appPath = Application.StartupPath + "\\HandInput\\1.1.0.282\\handinput.exe";
+            ProcessStartInfo process = new ProcessStartInfo
+            {
+                FileName = appPath,
+                Arguments = "process 1",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true
+            };
+            Process.Start(process);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            stopHandInput();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(Crt580ReadCardNo());
         }
     }
 }
