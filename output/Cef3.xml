@@ -403,17 +403,6 @@
             |data| will be copied.
             </summary>
         </member>
-        <member name="M:Cef3.CefBinaryValue.Copy">
-            <summary>
-            Returns a copy of this object. The data in this object will also be copied.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefBinaryValue.GetData(System.Byte[],System.Int64,System.Int64)">
-            <summary>
-            Read up to |buffer_size| number of bytes into |buffer|. Reading begins at
-            the specified byte |data_offset|. Returns the number of bytes read.
-            </summary>
-        </member>
         <member name="P:Cef3.CefBinaryValue.IsValid">
             <summary>
             Returns true if this object is valid. Do not call any other methods if this
@@ -425,9 +414,20 @@
             Returns true if this object is currently owned by another object.
             </summary>
         </member>
+        <member name="M:Cef3.CefBinaryValue.Copy">
+            <summary>
+            Returns a copy of this object. The data in this object will also be copied.
+            </summary>
+        </member>
         <member name="P:Cef3.CefBinaryValue.Size">
             <summary>
             Returns the data size.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefBinaryValue.GetData(System.Byte[],System.Int64,System.Int64)">
+            <summary>
+            Read up to |buffer_size| number of bytes into |buffer|. Reading begins at
+            the specified byte |data_offset|. Returns the number of bytes read.
             </summary>
         </member>
         <member name="T:Cef3.CefBrowser">
@@ -444,14 +444,29 @@
             browser process.
             </summary>
         </member>
+        <member name="P:Cef3.CefBrowser.CanGoBack">
+            <summary>
+            Returns true if the browser can navigate backwards.
+            </summary>
+        </member>
         <member name="M:Cef3.CefBrowser.GoBack">
             <summary>
             Navigate backwards.
             </summary>
         </member>
+        <member name="P:Cef3.CefBrowser.CanGoForward">
+            <summary>
+            Returns true if the browser can navigate forwards.
+            </summary>
+        </member>
         <member name="M:Cef3.CefBrowser.GoForward">
             <summary>
             Navigate forwards.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefBrowser.IsLoading">
+            <summary>
+            Returns true if the browser is currently loading.
             </summary>
         </member>
         <member name="M:Cef3.CefBrowser.Reload">
@@ -469,10 +484,25 @@
             Stop loading the page.
             </summary>
         </member>
+        <member name="P:Cef3.CefBrowser.Identifier">
+            <summary>
+            Returns the globally unique identifier for this browser.
+            </summary>
+        </member>
         <member name="M:Cef3.CefBrowser.IsSame(Cef3.CefBrowser)">
             <summary>
             Returns true if this object is pointing to the same handle as |that|
             object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefBrowser.IsPopup">
+            <summary>
+            Returns true if the window is a popup window.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefBrowser.HasDocument">
+            <summary>
+            Returns true if a document has been loaded in the browser.
             </summary>
         </member>
         <member name="M:Cef3.CefBrowser.GetMainFrame">
@@ -495,6 +525,11 @@
             Returns the frame with the specified name, or NULL if not found.
             </summary>
         </member>
+        <member name="P:Cef3.CefBrowser.FrameCount">
+            <summary>
+            Returns the number of frames that currently exist.
+            </summary>
+        </member>
         <member name="M:Cef3.CefBrowser.GetFrameIdentifiers">
             <summary>
             Returns the identifiers of all existing frames.
@@ -509,41 +544,6 @@
             <summary>
             Send a message to the specified |target_process|. Returns true if the
             message was sent successfully.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.CanGoBack">
-            <summary>
-            Returns true if the browser can navigate backwards.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.CanGoForward">
-            <summary>
-            Returns true if the browser can navigate forwards.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.IsLoading">
-            <summary>
-            Returns true if the browser is currently loading.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.Identifier">
-            <summary>
-            Returns the globally unique identifier for this browser.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.IsPopup">
-            <summary>
-            Returns true if the window is a popup window.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.HasDocument">
-            <summary>
-            Returns true if a document has been loaded in the browser.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowser.FrameCount">
-            <summary>
-            Returns the number of frames that currently exist.
             </summary>
         </member>
         <member name="T:Cef3.CefBrowserHost">
@@ -691,6 +691,16 @@
             Set whether mouse cursor change is disabled.
             </summary>
         </member>
+        <member name="P:Cef3.CefBrowserHost.IsMouseCursorChangeDisabled">
+            <summary>
+            Returns true if mouse cursor change is disabled.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefBrowserHost.IsWindowRenderingDisabled">
+            <summary>
+            Returns true if window rendering is disabled.
+            </summary>
+        </member>
         <member name="M:Cef3.CefBrowserHost.WasResized">
             <summary>
             Notify the browser that the widget has been resized. The browser will first
@@ -774,16 +784,6 @@
         <member name="M:Cef3.CefBrowserHost.HandleKeyEventAfterTextInputClient(System.IntPtr)">
             <summary>
             Performs any additional actions after NSTextInputClient handles the event.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowserHost.IsMouseCursorChangeDisabled">
-            <summary>
-            Returns true if mouse cursor change is disabled.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefBrowserHost.IsWindowRenderingDisabled">
-            <summary>
-            Returns true if window rendering is disabled.
             </summary>
         </member>
         <member name="T:Cef3.CefBrowserProcessHandler">
@@ -925,6 +925,24 @@
             Create a new CefCommandLine instance.
             </summary>
         </member>
+        <member name="P:Cef3.CefCommandLine.Global">
+            <summary>
+            Returns the singleton global CefCommandLine object. The returned object
+            will be read-only.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefCommandLine.IsValid">
+            <summary>
+            Returns true if this object is valid. Do not call any other methods if this
+            function returns false.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefCommandLine.IsReadOnly">
+            <summary>
+            Returns true if the values of this object are read-only. Some APIs may
+            expose read-only objects.
+            </summary>
+        </member>
         <member name="M:Cef3.CefCommandLine.Copy">
             <summary>
             Returns a writable copy of this object.
@@ -958,6 +976,11 @@
             Set the program part of the command line string (the first item).
             </summary>
         </member>
+        <member name="P:Cef3.CefCommandLine.HasSwitches">
+            <summary>
+            Returns true if the command line has switches.
+            </summary>
+        </member>
         <member name="M:Cef3.CefCommandLine.HasSwitch(System.String)">
             <summary>
             Returns true if the command line contains the given switch.
@@ -986,6 +1009,11 @@
             Add a switch with the specified value to the end of the command line.
             </summary>
         </member>
+        <member name="P:Cef3.CefCommandLine.HasArguments">
+            <summary>
+            True if there are remaining command line arguments.
+            </summary>
+        </member>
         <member name="M:Cef3.CefCommandLine.GetArguments">
             <summary>
             Get the remaining command line arguments.
@@ -1006,34 +1034,6 @@
             <summary>
             Insert an argument to the beginning of the command line.
             Unlike PrependWrapper this method doesn't strip argument by spaces.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefCommandLine.Global">
-            <summary>
-            Returns the singleton global CefCommandLine object. The returned object
-            will be read-only.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefCommandLine.IsValid">
-            <summary>
-            Returns true if this object is valid. Do not call any other methods if this
-            function returns false.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefCommandLine.IsReadOnly">
-            <summary>
-            Returns true if the values of this object are read-only. Some APIs may
-            expose read-only objects.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefCommandLine.HasSwitches">
-            <summary>
-            Returns true if the command line has switches.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefCommandLine.HasArguments">
-            <summary>
-            True if there are remaining command line arguments.
             </summary>
         </member>
         <member name="T:Cef3.CefCompletionHandler">
@@ -1182,6 +1182,12 @@
             any thread unless otherwise indicated.
             </summary>
         </member>
+        <member name="P:Cef3.CefCookieManager.Global">
+            <summary>
+            Returns the global cookie manager. By default data will be stored at
+            CefSettings.cache_path if specified or in memory otherwise.
+            </summary>
+        </member>
         <member name="M:Cef3.CefCookieManager.Create(System.String,System.Boolean)">
             <summary>
             Creates a new cookie manager. If |path| is empty data will be stored in
@@ -1252,12 +1258,6 @@
             accessed.
             </summary>
         </member>
-        <member name="P:Cef3.CefCookieManager.Global">
-            <summary>
-            Returns the global cookie manager. By default data will be stored at
-            CefSettings.cache_path if specified or in memory otherwise.
-            </summary>
-        </member>
         <member name="T:Cef3.CefCookieVisitor">
             <summary>
             Interface to implement for visiting cookie values. The methods of this class
@@ -1302,10 +1302,32 @@
             Creates a new object that is not owned by any other object.
             </summary>
         </member>
+        <member name="P:Cef3.CefDictionaryValue.IsValid">
+            <summary>
+            Returns true if this object is valid. Do not call any other methods if this
+            method returns false.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefDictionaryValue.IsOwned">
+            <summary>
+            Returns true if this object is currently owned by another object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefDictionaryValue.IsReadOnly">
+            <summary>
+            Returns true if the values of this object are read-only. Some APIs may
+            expose read-only objects.
+            </summary>
+        </member>
         <member name="M:Cef3.CefDictionaryValue.Copy(System.Boolean)">
             <summary>
             Returns a writable copy of this object. If |exclude_empty_children| is true
             any empty dictionaries or lists will be excluded from the copy.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefDictionaryValue.Count">
+            <summary>
+            Returns the number of values.
             </summary>
         </member>
         <member name="M:Cef3.CefDictionaryValue.Clear">
@@ -1428,28 +1450,6 @@
             reference will be invalidated.
             </summary>
         </member>
-        <member name="P:Cef3.CefDictionaryValue.IsValid">
-            <summary>
-            Returns true if this object is valid. Do not call any other methods if this
-            method returns false.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefDictionaryValue.IsOwned">
-            <summary>
-            Returns true if this object is currently owned by another object.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefDictionaryValue.IsReadOnly">
-            <summary>
-            Returns true if the values of this object are read-only. Some APIs may
-            expose read-only objects.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefDictionaryValue.Count">
-            <summary>
-            Returns the number of values.
-            </summary>
-        </member>
         <member name="T:Cef3.CefDisplayHandler">
             <summary>
             Implement this interface to handle events related to browser display state.
@@ -1495,17 +1495,6 @@
             be called on the render process main thread thread.
             </summary>
         </member>
-        <member name="M:Cef3.CefDomDocument.GetElementById(System.String)">
-            <summary>
-            Returns the document element with the specified ID value.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomDocument.GetCompleteUrl(System.String)">
-            <summary>
-            Returns a complete URL based on the document base URL and the specified
-            partial URL.
-            </summary>
-        </member>
         <member name="P:Cef3.CefDomDocument.DocumentType">
             <summary>
             Returns the document type.
@@ -1529,6 +1518,11 @@
         <member name="P:Cef3.CefDomDocument.Title">
             <summary>
             Returns the title of an HTML document.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomDocument.GetElementById(System.String)">
+            <summary>
+            Returns the document element with the specified ID value.
             </summary>
         </member>
         <member name="P:Cef3.CefDomDocument.FocusedNode">
@@ -1574,6 +1568,12 @@
         <member name="P:Cef3.CefDomDocument.BaseUrl">
             <summary>
             Returns the base URL for the document.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomDocument.GetCompleteUrl(System.String)">
+            <summary>
+            Returns a complete URL based on the document base URL and the specified
+            partial URL.
             </summary>
         </member>
         <member name="T:Cef3.CefDomEvent">
@@ -1642,55 +1642,6 @@
             called on the render process main thread.
             </summary>
         </member>
-        <member name="M:Cef3.CefDomNode.IsSame(Cef3.CefDomNode)">
-            <summary>
-            Returns true if this object is pointing to the same handle as |that|
-            object.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.SetValue(System.String)">
-            <summary>
-            Set the value of this node. Returns true on success.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.GetAsMarkup">
-            <summary>
-            Returns the contents of this node as markup.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.AddEventListener(System.String,Cef3.CefDomEventListener,System.Boolean)">
-            <summary>
-            Add an event listener to this node for the specified event type. If
-            |useCapture| is true then this listener will be considered a capturing
-            listener. Capturing listeners will recieve all events of the specified
-            type before the events are dispatched to any other event targets beneath
-            the current node in the tree. Events which are bubbling upwards through
-            the tree will not trigger a capturing listener. Separate calls to this
-            method can be used to register the same listener with and without capture.
-            See WebCore/dom/EventNames.h for the list of supported event types.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.HasAttribute(System.String)">
-            <summary>
-            Returns true if this element has an attribute named |attrName|.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.GetAttribute(System.String)">
-            <summary>
-            Returns the element attribute named |attrName|.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.GetAttributes">
-            <summary>
-            Returns a map of all element attributes.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefDomNode.SetAttribute(System.String,System.String)">
-            <summary>
-            Set the value for the element attribute named |attrName|. Returns true on
-            success.
-            </summary>
-        </member>
         <member name="P:Cef3.CefDomNode.NodeType">
             <summary>
             Returns the type for this node.
@@ -1721,6 +1672,12 @@
             Returns the type of this form control element node.
             </summary>
         </member>
+        <member name="M:Cef3.CefDomNode.IsSame(Cef3.CefDomNode)">
+            <summary>
+            Returns true if this object is pointing to the same handle as |that|
+            object.
+            </summary>
+        </member>
         <member name="P:Cef3.CefDomNode.Name">
             <summary>
             Returns the name of this node.
@@ -1729,6 +1686,16 @@
         <member name="P:Cef3.CefDomNode.Value">
             <summary>
             Returns the value of this node.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomNode.SetValue(System.String)">
+            <summary>
+            Set the value of this node. Returns true on success.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomNode.GetAsMarkup">
+            <summary>
+            Returns the contents of this node as markup.
             </summary>
         </member>
         <member name="P:Cef3.CefDomNode.Document">
@@ -1766,6 +1733,18 @@
             Returns the last child node.
             </summary>
         </member>
+        <member name="M:Cef3.CefDomNode.AddEventListener(System.String,Cef3.CefDomEventListener,System.Boolean)">
+            <summary>
+            Add an event listener to this node for the specified event type. If
+            |useCapture| is true then this listener will be considered a capturing
+            listener. Capturing listeners will recieve all events of the specified
+            type before the events are dispatched to any other event targets beneath
+            the current node in the tree. Events which are bubbling upwards through
+            the tree will not trigger a capturing listener. Separate calls to this
+            method can be used to register the same listener with and without capture.
+            See WebCore/dom/EventNames.h for the list of supported event types.
+            </summary>
+        </member>
         <member name="P:Cef3.CefDomNode.ElementTagName">
             <summary>
             The following methods are valid only for element nodes.
@@ -1775,6 +1754,27 @@
         <member name="P:Cef3.CefDomNode.HasAttributes">
             <summary>
             Returns true if this element has attributes.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomNode.HasAttribute(System.String)">
+            <summary>
+            Returns true if this element has an attribute named |attrName|.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomNode.GetAttribute(System.String)">
+            <summary>
+            Returns the element attribute named |attrName|.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomNode.GetAttributes">
+            <summary>
+            Returns a map of all element attributes.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDomNode.SetAttribute(System.String,System.String)">
+            <summary>
+            Set the value for the element attribute named |attrName|. Returns true on
+            success.
             </summary>
         </member>
         <member name="P:Cef3.CefDomNode.InnerText">
@@ -1924,12 +1924,6 @@
             on any thread.
             </summary>
         </member>
-        <member name="M:Cef3.CefDragData.GetFileNames">
-            <summary>
-            Retrieve the list of file names that are being dragged into the browser
-            window.
-            </summary>
-        </member>
         <member name="P:Cef3.CefDragData.IsLink">
             <summary>
             Returns true if the drag data is a link.
@@ -1979,6 +1973,12 @@
         <member name="P:Cef3.CefDragData.FileName">
             <summary>
             Return the name of the file being dragged out of the browser window.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefDragData.GetFileNames">
+            <summary>
+            Retrieve the list of file names that are being dragged into the browser
+            window.
             </summary>
         </member>
         <member name="T:Cef3.CefDragHandler">
@@ -2044,6 +2044,11 @@
             browser process the methods of this class may be called on any thread unless
             otherwise indicated in the comments. When used in the render process the
             methods of this class may only be called on the main thread.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefFrame.IsValid">
+            <summary>
+            True if this object is currently attached to a valid frame.
             </summary>
         </member>
         <member name="M:Cef3.CefFrame.Undo">
@@ -2126,17 +2131,6 @@
             reporting.
             </summary>
         </member>
-        <member name="M:Cef3.CefFrame.VisitDom(Cef3.CefDomVisitor)">
-            <summary>
-            Visit the DOM document. This method can only be called from the render
-            process.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefFrame.IsValid">
-            <summary>
-            True if this object is currently attached to a valid frame.
-            </summary>
-        </member>
         <member name="P:Cef3.CefFrame.IsMain">
             <summary>
             Returns true if this is the main (top-level) frame.
@@ -2181,6 +2175,12 @@
             <summary>
             Get the V8 context associated with the frame. This method can only be
             called from the render process.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefFrame.VisitDom(Cef3.CefDomVisitor)">
+            <summary>
+            Visit the DOM document. This method can only be called from the render
+            process.
             </summary>
         </member>
         <member name="T:Cef3.CefGeolocationCallback">
@@ -2416,6 +2416,23 @@
             Creates a new object that is not owned by any other object.
             </summary>
         </member>
+        <member name="P:Cef3.CefListValue.IsValid">
+            <summary>
+            Returns true if this object is valid. Do not call any other methods if this
+            method returns false.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefListValue.IsOwned">
+            <summary>
+            Returns true if this object is currently owned by another object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefListValue.IsReadOnly">
+            <summary>
+            Returns true if the values of this object are read-only. Some APIs may
+            expose read-only objects.
+            </summary>
+        </member>
         <member name="M:Cef3.CefListValue.Copy">
             <summary>
             Returns a writable copy of this object.
@@ -2425,6 +2442,11 @@
             <summary>
             Sets the number of values. If the number of values is expanded all
             new value slots will default to type null. Returns true on success.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefListValue.Count">
+            <summary>
+            Returns the number of values.
             </summary>
         </member>
         <member name="M:Cef3.CefListValue.Clear">
@@ -2537,28 +2559,6 @@
             reference will be invalidated.
             </summary>
         </member>
-        <member name="P:Cef3.CefListValue.IsValid">
-            <summary>
-            Returns true if this object is valid. Do not call any other methods if this
-            method returns false.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefListValue.IsOwned">
-            <summary>
-            Returns true if this object is currently owned by another object.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefListValue.IsReadOnly">
-            <summary>
-            Returns true if the values of this object are read-only. Some APIs may
-            expose read-only objects.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefListValue.Count">
-            <summary>
-            Returns the number of values.
-            </summary>
-        </member>
         <member name="T:Cef3.CefLoadHandler">
             <summary>
             Implement this interface to handle events related to browser load status. The
@@ -2614,6 +2614,11 @@
         <member name="M:Cef3.CefMenuModel.Clear">
             <summary>
             Clears the menu. Returns true on success.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefMenuModel.Count">
+            <summary>
+            Returns the number of items in this menu.
             </summary>
         </member>
         <member name="M:Cef3.CefMenuModel.AddSeparator">
@@ -2875,11 +2880,6 @@
             on success.
             </summary>
         </member>
-        <member name="P:Cef3.CefMenuModel.Count">
-            <summary>
-            Returns the number of items in this menu.
-            </summary>
-        </member>
         <member name="T:Cef3.CefPostData">
             <summary>
             Class used to represent post data for a web request. The methods of this
@@ -2889,6 +2889,16 @@
         <member name="M:Cef3.CefPostData.Create">
             <summary>
             Create a new CefPostData object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefPostData.IsReadOnly">
+            <summary>
+            Returns true if this object is read-only.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefPostData.Count">
+            <summary>
+            Returns the number of existing post data elements.
             </summary>
         </member>
         <member name="M:Cef3.CefPostData.GetElements">
@@ -2912,16 +2922,6 @@
             Remove all existing post data elements.
             </summary>
         </member>
-        <member name="P:Cef3.CefPostData.IsReadOnly">
-            <summary>
-            Returns true if this object is read-only.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefPostData.Count">
-            <summary>
-            Returns the number of existing post data elements.
-            </summary>
-        </member>
         <member name="T:Cef3.CefPostDataElement">
             <summary>
             Class used to represent a single element in the request post data. The
@@ -2931,6 +2931,11 @@
         <member name="M:Cef3.CefPostDataElement.Create">
             <summary>
             Create a new CefPostDataElement object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefPostDataElement.IsReadOnly">
+            <summary>
+            Returns true if this object is read-only.
             </summary>
         </member>
         <member name="M:Cef3.CefPostDataElement.SetToEmpty">
@@ -2949,30 +2954,25 @@
             in will be copied.
             </summary>
         </member>
+        <member name="P:Cef3.CefPostDataElement.ElementType">
+            <summary>
+            Return the type of this post data element.
+            </summary>
+        </member>
         <member name="M:Cef3.CefPostDataElement.GetFile">
             <summary>
             Return the file name.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefPostDataElement.BytesCount">
+            <summary>
+            Return the number of bytes.
             </summary>
         </member>
         <member name="M:Cef3.CefPostDataElement.GetBytes">
             <summary>
             Read up to |size| bytes into |bytes| and return the number of bytes
             actually read.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefPostDataElement.IsReadOnly">
-            <summary>
-            Returns true if this object is read-only.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefPostDataElement.ElementType">
-            <summary>
-            Return the type of this post data element.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefPostDataElement.BytesCount">
-            <summary>
-            Return the number of bytes.
             </summary>
         </member>
         <member name="T:Cef3.CefProcessMessage">
@@ -2985,11 +2985,6 @@
             Create a new CefProcessMessage object with the specified name.
             </summary>
         </member>
-        <member name="M:Cef3.CefProcessMessage.Copy">
-            <summary>
-            Returns a writable copy of this object.
-            </summary>
-        </member>
         <member name="P:Cef3.CefProcessMessage.IsValid">
             <summary>
             Returns true if this object is valid. Do not call any other methods if this
@@ -3000,6 +2995,11 @@
             <summary>
             Returns true if the values of this object are read-only. Some APIs may
             expose read-only objects.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefProcessMessage.Copy">
+            <summary>
+            Returns a writable copy of this object.
             </summary>
         </member>
         <member name="P:Cef3.CefProcessMessage.Name">
@@ -3212,21 +3212,6 @@
             Create a new CefRequest object.
             </summary>
         </member>
-        <member name="M:Cef3.CefRequest.GetHeaderMap">
-            <summary>
-            Get the header values.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefRequest.SetHeaderMap(System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Set the header values.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefRequest.Set(System.String,System.String,Cef3.CefPostData,System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Set all values at one time.
-            </summary>
-        </member>
         <member name="P:Cef3.CefRequest.IsReadOnly">
             <summary>
             Returns true if this object is read-only.
@@ -3246,6 +3231,21 @@
         <member name="P:Cef3.CefRequest.PostData">
             <summary>
             Get the post data.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefRequest.GetHeaderMap">
+            <summary>
+            Get the header values.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefRequest.SetHeaderMap(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Set the header values.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefRequest.Set(System.String,System.String,Cef3.CefPostData,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Set all values at one time.
             </summary>
         </member>
         <member name="P:Cef3.CefRequest.Options">
@@ -3305,14 +3305,14 @@
             object.
             </summary>
         </member>
-        <member name="M:Cef3.CefRequestContext.GetHandler">
-            <summary>
-            Returns the handler for this context if any.
-            </summary>
-        </member>
         <member name="P:Cef3.CefRequestContext.IsGlobal">
             <summary>
             Returns true if this object is the global context.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefRequestContext.GetHandler">
+            <summary>
+            Returns the handler for this context if any.
             </summary>
         </member>
         <member name="T:Cef3.CefRequestContextHandler">
@@ -3512,21 +3512,6 @@
             Create a new CefResponse object.
             </summary>
         </member>
-        <member name="M:Cef3.CefResponse.GetHeader(System.String)">
-            <summary>
-            Get the value for the specified response header field.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefResponse.GetHeaderMap">
-            <summary>
-            Get all response header fields.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefResponse.SetHeaderMap(System.Collections.Specialized.NameValueCollection)">
-            <summary>
-            Set all response header fields.
-            </summary>
-        </member>
         <member name="P:Cef3.CefResponse.IsReadOnly">
             <summary>
             Returns true if this object is read-only.
@@ -3545,6 +3530,21 @@
         <member name="P:Cef3.CefResponse.MimeType">
             <summary>
             Gets or sets the response mime type.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefResponse.GetHeader(System.String)">
+            <summary>
+            Get the value for the specified response header field.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefResponse.GetHeaderMap">
+            <summary>
+            Get all response header fields.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefResponse.SetHeaderMap(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Set all response header fields.
             </summary>
         </member>
         <member name="T:Cef3.CefRunFileDialogCallback">
@@ -3758,6 +3758,11 @@
             object.
             </summary>
         </member>
+        <member name="P:Cef3.CefTaskRunner.BelongsToCurrentThread">
+            <summary>
+            Returns true if this task runner belongs to the current thread.
+            </summary>
+        </member>
         <member name="M:Cef3.CefTaskRunner.BelongsToThread(Cef3.CefThreadId)">
             <summary>
             Returns true if this task runner is for the specified CEF thread.
@@ -3775,11 +3780,6 @@
             runner. Execution will occur asynchronously. Delayed tasks are not
             supported on V8 WebWorker threads and will be executed without the
             specified delay.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefTaskRunner.BelongsToCurrentThread">
-            <summary>
-            Returns true if this task runner belongs to the current thread.
             </summary>
         </member>
         <member name="T:Cef3.CefTraceClient">
@@ -3839,6 +3839,17 @@
             Returns the client.
             </summary>
         </member>
+        <member name="P:Cef3.CefUrlRequest.RequestStatus">
+            <summary>
+            Returns the request status.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefUrlRequest.RequestError">
+            <summary>
+            Returns the request error if status is UR_CANCELED or UR_FAILED, or 0
+            otherwise.
+            </summary>
+        </member>
         <member name="M:Cef3.CefUrlRequest.GetResponse">
             <summary>
             Returns the response, or NULL if no response information is available.
@@ -3849,17 +3860,6 @@
         <member name="M:Cef3.CefUrlRequest.Cancel">
             <summary>
             Cancel the request.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefUrlRequest.RequestStatus">
-            <summary>
-            Returns the request status.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefUrlRequest.RequestError">
-            <summary>
-            Returns the request error if status is UR_CANCELED or UR_FAILED, or 0
-            otherwise.
             </summary>
         </member>
         <member name="T:Cef3.CefUrlRequestClient">
@@ -3951,11 +3951,23 @@
             Returns the entered (bottom) context object in the V8 context stack.
             </summary>
         </member>
+        <member name="P:Cef3.CefV8Context.InContext">
+            <summary>
+            Returns true if V8 is currently inside a context.
+            </summary>
+        </member>
         <member name="M:Cef3.CefV8Context.GetTaskRunner">
             <summary>
             Returns the task runner associated with this context. V8 handles can only
             be accessed from the thread on which they are created. This method can be
             called on any render process thread.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Context.IsValid">
+            <summary>
+            Returns true if the underlying handle is valid and it can be accessed on
+            the current thread. Do not call any other methods if this method returns
+            false.
             </summary>
         </member>
         <member name="M:Cef3.CefV8Context.GetBrowser">
@@ -4003,18 +4015,6 @@
             On success |retval| will be set to the return value, if any, and the
             function will return true. On failure |exception| will be set to the
             exception, if any, and the function will return false.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Context.InContext">
-            <summary>
-            Returns true if V8 is currently inside a context.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Context.IsValid">
-            <summary>
-            Returns true if the underlying handle is valid and it can be accessed on
-            the current thread. Do not call any other methods if this method returns
-            false.
             </summary>
         </member>
         <member name="T:Cef3.CefV8Exception">
@@ -4153,11 +4153,6 @@
             the maximum number of frames that will be captured.
             </summary>
         </member>
-        <member name="M:Cef3.CefV8StackTrace.GetFrame(System.Int32)">
-            <summary>
-            Returns the stack frame at the specified 0-based index.
-            </summary>
-        </member>
         <member name="P:Cef3.CefV8StackTrace.IsValid">
             <summary>
             Returns true if the underlying handle is valid and it can be accessed on
@@ -4168,6 +4163,11 @@
         <member name="P:Cef3.CefV8StackTrace.FrameCount">
             <summary>
             Returns the number of stack frames.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefV8StackTrace.GetFrame(System.Int32)">
+            <summary>
+            Returns the stack frame at the specified 0-based index.
             </summary>
         </member>
         <member name="T:Cef3.CefV8Value">
@@ -4248,6 +4248,68 @@
             on a stored CefV8Context reference.
             </summary>
         </member>
+        <member name="P:Cef3.CefV8Value.IsValid">
+            <summary>
+            Returns true if the underlying handle is valid and it can be accessed on
+            the current thread. Do not call any other methods if this method returns
+            false.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsUndefined">
+            <summary>
+            True if the value type is undefined.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsNull">
+            <summary>
+            True if the value type is null.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsBool">
+            <summary>
+            True if the value type is bool.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsInt">
+            <summary>
+            True if the value type is int.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsUInt">
+            <summary>
+            True if the value type is unsigned int.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsDouble">
+            <summary>
+            True if the value type is double.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsDate">
+            <summary>
+            True if the value type is Date.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsString">
+            <summary>
+            True if the value type is string.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsObject">
+            <summary>
+            True if the value type is object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsArray">
+            <summary>
+            True if the value type is array.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsFunction">
+            <summary>
+            True if the value type is function.
+            </summary>
+        </member>
         <member name="M:Cef3.CefV8Value.IsSame(Cef3.CefV8Value)">
             <summary>
             Returns true if this object is pointing to the same handle as |that|
@@ -4288,6 +4350,20 @@
             <summary>
             Return a string value.  The underlying data will be converted to if
             necessary.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.IsUserCreated">
+            <summary>
+            OBJECT METHODS - These methods are only available on objects. Arrays and
+            functions are also objects. String- and integer-based keys can be used
+            interchangably with the framework converting between them as necessary.
+            Returns true if this is a user created object.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefV8Value.HasException">
+            <summary>
+            Returns true if the last method call resulted in an exception. This
+            attribute exists only in the scope of the current CEF value object.
             </summary>
         </member>
         <member name="M:Cef3.CefV8Value.GetException">
@@ -4461,82 +4537,6 @@
             exception is thrown.
             </summary>
         </member>
-        <member name="P:Cef3.CefV8Value.IsValid">
-            <summary>
-            Returns true if the underlying handle is valid and it can be accessed on
-            the current thread. Do not call any other methods if this method returns
-            false.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsUndefined">
-            <summary>
-            True if the value type is undefined.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsNull">
-            <summary>
-            True if the value type is null.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsBool">
-            <summary>
-            True if the value type is bool.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsInt">
-            <summary>
-            True if the value type is int.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsUInt">
-            <summary>
-            True if the value type is unsigned int.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsDouble">
-            <summary>
-            True if the value type is double.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsDate">
-            <summary>
-            True if the value type is Date.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsString">
-            <summary>
-            True if the value type is string.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsObject">
-            <summary>
-            True if the value type is object.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsArray">
-            <summary>
-            True if the value type is array.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsFunction">
-            <summary>
-            True if the value type is function.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.IsUserCreated">
-            <summary>
-            OBJECT METHODS - These methods are only available on objects. Arrays and
-            functions are also objects. String- and integer-based keys can be used
-            interchangably with the framework converting between them as necessary.
-            Returns true if this is a user created object.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefV8Value.HasException">
-            <summary>
-            Returns true if the last method call resulted in an exception. This
-            attribute exists only in the scope of the current CEF value object.
-            </summary>
-        </member>
         <member name="T:Cef3.CefWebPluginInfo">
             <summary>
             Information about a specific web plugin.
@@ -4643,72 +4643,6 @@
             occurs on the correct thread.
             </summary>
         </member>
-        <member name="M:Cef3.CefXmlReader.GetAttribute(System.Int32)">
-            <summary>
-            Returns the value of the attribute at the specified 0-based index.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.GetAttribute(System.String)">
-            <summary>
-            Returns the value of the attribute with the specified qualified name.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.GetAttribute(System.String,System.String)">
-            <summary>
-            Returns the value of the attribute with the specified local name and
-            namespace URI.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.GetInnerXml">
-            <summary>
-            Returns an XML representation of the current node's children.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.GetOuterXml">
-            <summary>
-            Returns an XML representation of the current node including its children.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.MoveToAttribute(System.Int32)">
-            <summary>
-            Attribute nodes are not traversed by default. The below methods can be
-            used to move the cursor to an attribute node. MoveToCarryingElement() can
-            be called afterwards to return the cursor to the carrying element. The
-            depth of an attribute node will be 1 + the depth of the carrying element.
-            Moves the cursor to the attribute at the specified 0-based index. Returns
-            true if the cursor position was set successfully.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.MoveToAttribute(System.String)">
-            <summary>
-            Moves the cursor to the attribute with the specified qualified name.
-            Returns true if the cursor position was set successfully.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.MoveToAttribute(System.String,System.String)">
-            <summary>
-            Moves the cursor to the attribute with the specified local name and
-            namespace URI. Returns true if the cursor position was set successfully.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.MoveToFirstAttribute">
-            <summary>
-            Moves the cursor to the first attribute in the current element. Returns
-            true if the cursor position was set successfully.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.MoveToNextAttribute">
-            <summary>
-            Moves the cursor to the next attribute in the current element. Returns
-            true if the cursor position was set successfully.
-            </summary>
-        </member>
-        <member name="M:Cef3.CefXmlReader.MoveToCarryingElement">
-            <summary>
-            Moves the cursor back to the carrying element. Returns true if the cursor
-            position was set successfully.
-            </summary>
-        </member>
         <member name="P:Cef3.CefXmlReader.HasError">
             <summary>
             Returns true if an error has been reported by the XML parser.
@@ -4793,9 +4727,75 @@
             Returns the number of attributes.
             </summary>
         </member>
+        <member name="M:Cef3.CefXmlReader.GetAttribute(System.Int32)">
+            <summary>
+            Returns the value of the attribute at the specified 0-based index.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.GetAttribute(System.String)">
+            <summary>
+            Returns the value of the attribute with the specified qualified name.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.GetAttribute(System.String,System.String)">
+            <summary>
+            Returns the value of the attribute with the specified local name and
+            namespace URI.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.GetInnerXml">
+            <summary>
+            Returns an XML representation of the current node's children.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.GetOuterXml">
+            <summary>
+            Returns an XML representation of the current node including its children.
+            </summary>
+        </member>
         <member name="P:Cef3.CefXmlReader.LineNumber">
             <summary>
             Returns the line number for the current node.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.MoveToAttribute(System.Int32)">
+            <summary>
+            Attribute nodes are not traversed by default. The below methods can be
+            used to move the cursor to an attribute node. MoveToCarryingElement() can
+            be called afterwards to return the cursor to the carrying element. The
+            depth of an attribute node will be 1 + the depth of the carrying element.
+            Moves the cursor to the attribute at the specified 0-based index. Returns
+            true if the cursor position was set successfully.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.MoveToAttribute(System.String)">
+            <summary>
+            Moves the cursor to the attribute with the specified qualified name.
+            Returns true if the cursor position was set successfully.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.MoveToAttribute(System.String,System.String)">
+            <summary>
+            Moves the cursor to the attribute with the specified local name and
+            namespace URI. Returns true if the cursor position was set successfully.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.MoveToFirstAttribute">
+            <summary>
+            Moves the cursor to the first attribute in the current element. Returns
+            true if the cursor position was set successfully.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.MoveToNextAttribute">
+            <summary>
+            Moves the cursor to the next attribute in the current element. Returns
+            true if the cursor position was set successfully.
+            </summary>
+        </member>
+        <member name="M:Cef3.CefXmlReader.MoveToCarryingElement">
+            <summary>
+            Moves the cursor back to the carrying element. Returns true if the cursor
+            position was set successfully.
             </summary>
         </member>
         <member name="T:Cef3.CefZipReader">
@@ -5556,66 +5556,15 @@
             Paint element types.
             </summary>
         </member>
-        <member name="T:Cef3.CefWindowInfo">
+        <member name="T:Cef3.Interop.cef_string_userfree">
             <summary>
-            Class representing window information.
+            It is sometimes necessary for the system to allocate string structures with
+            the expectation that the user will free them. The userfree types act as a
+            hint that the user is responsible for freeing the structure.
             </summary>
             <remarks>
-            Meanings for handles:
-            <list type="table">
-                <listheader>
-                    <item>Platform</item>
-                    <description>Description</description>
-                </listheader>
-                <item>
-                    <item>Windows</item>
-                    <description>Window handle (HWND)</description>
-                </item>
-                <item>
-                    <item>Mac OS X</item>
-                    <description>NSView pointer for the parent view (NSView*)</description>
-                </item>
-                <item>
-                    <item>Linux</item>
-                    <description>Pointer for the new browser widget (GtkWidget*)</description>
-                </item>
-            </list>
+            <c>cef_string_userfree*</c> === <c>cef_string_userfree_t</c>.
             </remarks>
-        </member>
-        <member name="P:Cef3.CefWindowInfo.ParentHandle">
-            <summary>
-            Handle for the parent window.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefWindowInfo.Handle">
-            <summary>
-            Handle for the new browser window.
-            </summary>
-        </member>
-        <member name="P:Cef3.CefWindowInfo.WindowRenderingDisabled">
-            <summary>
-            -- Windows --
-            If window rendering is disabled no browser window will be created. Set
-            |parent_window| to be used for identifying monitor info
-            (MonitorFromWindow). If |parent_window| is not provided the main screen
-            monitor will be used.
-            
-            -- MacOSX --
-            If window rendering is disabled no browser window will be created. Set
-            |parent_view| to the window that will act as the parent for popup menus,
-            dialog boxes, etc.
-            
-            -- Linux --
-            Unsupported
-            </summary>
-        </member>
-        <member name="P:Cef3.CefWindowInfo.TransparentPainting">
-            <summary>
-            Set to true to enable transparent painting.
-            If window rendering is disabled and |transparent_painting| is set to true
-            WebKit rendering will draw on a transparent background (RGBA=0x00000000).
-            When this value is false the background will be white and opaque.
-            </summary>
         </member>
         <member name="T:Cef3.Platform.Windows.WindowStyle">
             <summary>
@@ -6134,6 +6083,67 @@
             content.
             </summary>
         </member>
+        <member name="T:Cef3.CefWindowInfo">
+            <summary>
+            Class representing window information.
+            </summary>
+            <remarks>
+            Meanings for handles:
+            <list type="table">
+                <listheader>
+                    <item>Platform</item>
+                    <description>Description</description>
+                </listheader>
+                <item>
+                    <item>Windows</item>
+                    <description>Window handle (HWND)</description>
+                </item>
+                <item>
+                    <item>Mac OS X</item>
+                    <description>NSView pointer for the parent view (NSView*)</description>
+                </item>
+                <item>
+                    <item>Linux</item>
+                    <description>Pointer for the new browser widget (GtkWidget*)</description>
+                </item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:Cef3.CefWindowInfo.ParentHandle">
+            <summary>
+            Handle for the parent window.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefWindowInfo.Handle">
+            <summary>
+            Handle for the new browser window.
+            </summary>
+        </member>
+        <member name="P:Cef3.CefWindowInfo.WindowRenderingDisabled">
+            <summary>
+            -- Windows --
+            If window rendering is disabled no browser window will be created. Set
+            |parent_window| to be used for identifying monitor info
+            (MonitorFromWindow). If |parent_window| is not provided the main screen
+            monitor will be used.
+            
+            -- MacOSX --
+            If window rendering is disabled no browser window will be created. Set
+            |parent_view| to the window that will act as the parent for popup menus,
+            dialog boxes, etc.
+            
+            -- Linux --
+            Unsupported
+            </summary>
+        </member>
+        <member name="P:Cef3.CefWindowInfo.TransparentPainting">
+            <summary>
+            Set to true to enable transparent painting.
+            If window rendering is disabled and |transparent_painting| is set to true
+            WebKit rendering will draw on a transparent background (RGBA=0x00000000).
+            When this value is false the background will be white and opaque.
+            </summary>
+        </member>
         <member name="T:Cef3.CefBrowserSettings">
             <summary>
             Browser initialization settings. Specify <c>null</c> or 0 to get the recommended
@@ -6360,16 +6370,6 @@
              The |rect| and |available_rect| properties are used to determine the
              available surface for rendering popup views.
              </summary>
-        </member>
-        <member name="T:Cef3.Interop.cef_string_userfree">
-            <summary>
-            It is sometimes necessary for the system to allocate string structures with
-            the expectation that the user will free them. The userfree types act as a
-            hint that the user is responsible for freeing the structure.
-            </summary>
-            <remarks>
-            <c>cef_string_userfree*</c> === <c>cef_string_userfree_t</c>.
-            </remarks>
         </member>
     </members>
 </doc>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Sashulin;
 
@@ -17,7 +18,6 @@ namespace WinFormDemo
         [STAThread]
         static void Main()
         {
-
             bool noRun = false;
             Run = new System.Threading.Mutex(true, "WinFormDemo", out noRun);
 

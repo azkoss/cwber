@@ -36,7 +36,7 @@
       <Value Profile="(Default)">Microsoft Print to PDF</Value>
     </Setting>
     <Setting Name="testMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="showWebError" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -79,6 +79,9 @@
     </Setting>
     <Setting Name="zzj_value" Type="System.String" Scope="User">
       <Value Profile="(Default)">zzj001</Value>
+    </Setting>
+    <Setting Name="WuLiHuJiaoQiPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM5</Value>
     </Setting>
   </Settings>
 </SettingsFile>

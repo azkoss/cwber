@@ -276,40 +276,48 @@ namespace WinFormDemo
     {
 
         #region 调用非接读卡器dll
-        //        private static readonly ILog Log = LogManager.GetLogger("DcrfLog");
         [DllImport("dcrf32.dll")]
-        public static extern int dc_init(Int16 port, Int32 baud); //初试化
-
+        public static extern int dc_init(Int16 port, long baud);  //初试化
         [DllImport("dcrf32.dll")]
         public static extern short dc_exit(int icdev);
-
-        [DllImport("dcrf32.dll")]
-        public static extern short dc_card(int icdev, char mode, ref ulong snr);
-
-        [DllImport("dcrf32.dll")]
-        public static extern short dc_beep(int icdev, uint msec);
-
         [DllImport("dcrf32.dll")]
         public static extern short dc_reset(int icdev, uint sec);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_config_card(int icdev, byte cardtype);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_request(int icdev, char _Mode, ref uint TagType);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_card(int icdev, char _Mode, ref ulong Snr);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_halt(int icdev);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_anticoll(int icdev, char _Bcnt, ref ulong IcCardNo);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_beep(int icdev, uint _Msec);
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_authentication(int icdev, int _Mode, int _SecNr);
 
         [DllImport("dcrf32.dll")]
-        public static extern int dc_authentication(int icdev, int _Mode, int _SecNr);
+        public static extern short dc_load_key(int icdev, int mode, int secnr, [In] byte[] nkey);  //密码装载到读写模块中
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_load_key_hex(int icdev, int mode, int secnr, string nkey);  //密码装载到读写模块中
 
         [DllImport("dcrf32.dll")]
-        public static extern int dc_load_key(int icdev, int mode, int secnr, [In] byte[] nkey);  //密码装载到读写模块中
+        public static extern short dc_write(int icdev, int adr, [In] byte[] sdata);  //向卡中写入数据
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_write(int icdev, int adr, [In] string sdata);  //向卡中写入数据
+        [DllImport("dcrf32.dll")]
+        public static extern short dc_write_hex(int icdev, int adr, [In] string sdata);  //向卡中写入数据(转换为16进制)
 
         [DllImport("dcrf32.dll")]
-        public static extern int dc_load_key_hex(int icdev, int mode, int secnr, string nkey);  //密码装载到读写模块中
+        public static extern short dc_read(int icdev, int adr, [Out] byte[] sdata);
 
         [DllImport("dcrf32.dll")]
         public static extern short dc_read(int icdev, int adr, [MarshalAs(UnmanagedType.LPStr)] StringBuilder sdata);  //从卡中读数据
-
         [DllImport("dcrf32.dll")]
         public static extern short dc_read_hex(int icdev, int adr, [MarshalAs(UnmanagedType.LPStr)] StringBuilder sdata);  //从卡中读数据(转换为16进制)
-        
         [DllImport("dcrf32.dll")]
         public static extern int a_hex(string oldValue, ref string newValue, Int16 len);  //普通字符转换成十六进制字符
-        
         [DllImport("dcrf32.dll")]
         public static extern void hex_a(ref string oldValue, ref string newValue, int len);  //十六进制字符转换成普通字符
 
