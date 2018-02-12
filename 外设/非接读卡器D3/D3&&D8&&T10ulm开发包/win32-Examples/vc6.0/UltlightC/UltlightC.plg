@@ -1,0 +1,77 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: UltlightC - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/UltlightC.res" /d "NDEBUG" /d "_AFXDLL" "C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\UltlightC.rc"" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP52A.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/UltlightC.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\UltlightC.cpp"
+"C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\UltlightCDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP52A.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP52B.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/UltlightC.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP52B.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:no /pdb:"Release/UltlightC.pdb" /machine:I386 /out:"Release/UltlightC.exe"  ".\Release\StdAfx.obj" ".\Release\UltlightC.obj" ".\Release\UltlightCDlg.obj" ".\Release\UltlightC.res" ".\dcrf32.lib" "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+StdAfx.cpp
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+UltlightC.cpp
+UltlightCDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+UltlightC.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: UltlightC - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/UltlightC.res" /d "_DEBUG" /d "_AFXDLL" "C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\UltlightC.rc"" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP52D.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/UltlightC.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\UltlightC.cpp"
+"C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\UltlightCDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP52D.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP52E.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/UltlightC.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\D8&&T10-ulm绿色安装包\win32-Examples\vc6.0\UltlightC\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP52E.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/UltlightC.pdb" /debug /machine:I386 /out:"Debug/UltlightC.exe" /pdbtype:sept  ".\Debug\StdAfx.obj" ".\Debug\UltlightC.obj" ".\Debug\UltlightCDlg.obj" ".\Debug\UltlightC.res" ".\dcrf32.lib" "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+StdAfx.cpp
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+UltlightC.cpp
+UltlightCDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+UltlightC.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

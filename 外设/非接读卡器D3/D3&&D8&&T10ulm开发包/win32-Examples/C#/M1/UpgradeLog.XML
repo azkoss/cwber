@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="test">
+</Property><Property Name="Solution File" Value="C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\test.sln">
+</Property><Property Name="Date" Value="2015年1月30日星期五">
+</Property><Property Name="Time" Value="15:16">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="test.sln" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\test.sln">
+</Event><Event ErrorLevel="0" Project="test" Source="test.csproj" Description="Project file successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\test.csproj">
+</Event><Event ErrorLevel="0" Project="test" Source="test.csproj.user" Description="Project user file successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\test.csproj.user">
+</Event><Event ErrorLevel="0" Project="test" Source="AssemblyInfo.cs" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="test" Source="dcc.cs" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\dcc.cs">
+</Event><Event ErrorLevel="0" Project="test" Source="FormIcManager.cs" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\FormIcManager.cs">
+</Event><Event ErrorLevel="0" Project="test" Source="App.ico" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\App.ico">
+</Event><Event ErrorLevel="0" Project="test" Source="dcc.resx" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\dcc.resx">
+</Event><Event ErrorLevel="0" Project="test" Source="FormIcManager.resx" Description="File successfully backed up as C:\Documents and Settings\a\桌面\T10ULM开发包-10375148020-\T10-ulm绿色安装包-8.0.1.6\win32-Examples\C#\Backup\FormIcManager.resx">
+</Event><Event ErrorLevel="0" Project="test" Source="test.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="test" Source="test.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="test.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="test.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="test" Source="test.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

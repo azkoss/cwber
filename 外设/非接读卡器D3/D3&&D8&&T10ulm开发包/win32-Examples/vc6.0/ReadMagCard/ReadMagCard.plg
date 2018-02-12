@@ -1,0 +1,88 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ReadMagCard - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/ReadMagCard.res" /d "NDEBUG" /d "_AFXDLL" "E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCard.rc"" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP844.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/ReadMagCard.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCard.cpp"
+"E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCardDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP844.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP845.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/ReadMagCard.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP845.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:no /pdb:"Release/ReadMagCard.pdb" /machine:I386 /out:"Release/ReadMagCard.exe"  ".\Release\ReadMagCard.obj" ".\Release\ReadMagCardDlg.obj" ".\Release\StdAfx.obj" ".\Release\ReadMagCard.res" ".\dcrf32.lib" "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+StdAfx.cpp
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+ReadMagCard.cpp
+ReadMagCardDlg.cpp
+E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCardDlg.cpp(7): fatal error C1083: Cannot open include file: 'dcrf32.h': No such file or directory
+Generating Code...
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+ReadMagCard.exe - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: ReadMagCard - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/ReadMagCard.res" /d "_DEBUG" /d "_AFXDLL" "E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCard.rc"" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP846.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/ReadMagCard.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCard.cpp"
+"E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCardDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP846.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP847.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/ReadMagCard.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP847.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP848.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/ReadMagCard.pdb" /debug /machine:I386 /out:"Debug/ReadMagCard.exe" /pdbtype:sept 
+".\Debug\ReadMagCard.obj"
+".\Debug\ReadMagCardDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\ReadMagCard.res"
+".\dcrf32.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP848.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+StdAfx.cpp
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+ReadMagCard.cpp
+ReadMagCardDlg.cpp
+E:\T10N&&T10&&D8(¼Ö¹¤³ÂºÆ)\T10&&T10N·Ç½Ó´¥Ê½¶ÁÐ´Æ÷SDK\win32-Examples\vc6.0\´ÅÌõ¿¨\ReadMagCard\ReadMagCardDlg.cpp(7): fatal error C1083: Cannot open include file: 'dcrf32.h': No such file or directory
+Generating Code...
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+ReadMagCard.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

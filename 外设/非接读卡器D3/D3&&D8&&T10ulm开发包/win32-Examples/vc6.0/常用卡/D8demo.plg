@@ -1,0 +1,77 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: D8demo - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/D8demo.res" /d "NDEBUG" /d "_AFXDLL" "E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\D8demo.rc"" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B2.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/D8demo.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\D8demo.cpp"
+"E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\D8demoDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B2.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B3.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/D8demo.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B3.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:no /pdb:"Release/D8demo.pdb" /machine:I386 /out:"Release/D8demo.exe"  ".\Release\D8demo.obj" ".\Release\D8demoDlg.obj" ".\Release\StdAfx.obj" ".\Release\D8demo.res" ".\dcrf32.lib" "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+StdAfx.cpp
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+D8demo.cpp
+D8demoDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+D8demo.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: D8demo - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/D8demo.res" /d "_DEBUG" "E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\D8demo.rc"" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B5.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /Fp"Debug/D8demo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\D8demo.cpp"
+"E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\D8demoDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B5.tmp" 
+Creating temporary file "C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B6.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /Fp"Debug/D8demo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\T10N&&T10&&D8(贾工陈浩)\T10&&T10N非接触式读写器SDK\win32-Examples\vc6.0\常用卡\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\a\LOCALS~1\Temp\RSP1B6.tmp" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/D8demo.pdb" /debug /machine:I386 /out:"Debug/D8demo.exe" /pdbtype:sept  ".\Debug\D8demo.obj" ".\Debug\D8demoDlg.obj" ".\Debug\StdAfx.obj" ".\Debug\D8demo.res" ".\dcrf32.lib" "
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+StdAfx.cpp
+Compiling...
+  ****** {BD Software Proxy CL v2.50} STL Message Decryption is ON! ******
+D8demo.cpp
+D8demoDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+D8demo.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
