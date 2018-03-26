@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using System.Xml;
 using BarcodeLib;
 
@@ -52,6 +56,23 @@ namespace WinFormDemo
             this.xmlInfo = info;
             PrintDocument pd = new PrintDocument { PrintController = new StandardPrintController() };
             pd.PrinterSettings.PrinterName = Properties.Settings.Default.printerName;
+
+            #region 电力医院打印处方设置纸张来源
+            #if true
+            PaperSize pkSize;
+            ComboBox comboPaperSize = new ComboBox();
+            for(int i = 0; i <pd.PrinterSettings.PaperSizes.Count; i ++){
+                pkSize = pd.PrinterSettings.PaperSizes [i];
+                comboPaperSize.Items.Add(pkSize);
+            }
+
+            //创建一个PaperSize并通过构造函数指定自定义纸张大小并添加到组合框中。
+            PaperSize pkCustomSize1 = new PaperSize("A5", 827, 583);
+            pd.DefaultPageSettings.PaperSize = pkCustomSize1;
+            pd.PrinterSettings.DefaultPageSettings.PaperSize = pkCustomSize1;
+            #endif
+            #endregion
+
             Margins margin = new Margins(20, 20, 20, 20);
             pd.DefaultPageSettings.Margins = margin;
             pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPageGH);
@@ -90,7 +111,21 @@ namespace WinFormDemo
                         pos = y;
                         Font f = new Font(font, size);
                         Brush b = new SolidBrush(Color.Black);
-                        g.DrawString(value, f, b, x, y);
+                        if (value.Contains("base64Picture"))
+                        {
+                            Image image = Base64StringToImage(value.Remove(0, 14));
+                            g.DrawImage(image, x, y);
+                        }
+                        else if (value.Contains("localPicture"))
+                        {
+                            Image image = Image.FromFile(value.Remove(0, 13));
+                            Image bitmap = Bitmap.FromFile(value.Remove(0, 13), false);
+                            g.DrawImage(image, x, y);
+                        }
+                        else
+                        {
+                            g.DrawString(value, f, b, x, y);
+                        }
                     }
                 }
                 if (S != "")
@@ -109,7 +144,6 @@ namespace WinFormDemo
                 if (node.Attributes != null)
                 {
                     int width = Int32.Parse("0" + node.Attributes["width"].Value);
-                    //                    Pen p = new Pen(Color.Blue, 2);
                     Pen p = new Pen(Color.White, 2);
                     g.DrawRectangle(p, 2, 2, width, pos + 30);
                 }
@@ -199,5 +233,21 @@ namespace WinFormDemo
             return buffer;
         }
         #endregion
+
+        public Bitmap Base64StringToImage(string strbase64)
+        {
+            try
+            {
+                byte[] arr = Convert.FromBase64String(strbase64);
+                MemoryStream ms = new MemoryStream(arr);
+                Bitmap bmp = new Bitmap(ms); 
+                ms.Close();
+                return bmp;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }  
     }
 }

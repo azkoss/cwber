@@ -12,7 +12,7 @@ namespace WinFormDemo.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -134,7 +134,7 @@ namespace WinFormDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Print to PDF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft XPS Document Writer")]
         public string printerName {
             get {
                 return ((string)(this["printerName"]));
@@ -333,6 +333,18 @@ namespace WinFormDemo.Properties {
             }
             set {
                 this["WuLiHuJiaoQiPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM7")]
+        public string K710ComPort {
+            get {
+                return ((string)(this["K710ComPort"]));
+            }
+            set {
+                this["K710ComPort"] = value;
             }
         }
     }

@@ -119,6 +119,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="base64Image.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="base64Image.Designer.cs">
+      <DependentUpon>base64Image.cs</DependentUpon>
+    </Compile>
     <Compile Include="BusinessData.cs" />
     <Compile Include="CommUtil\BaseUtil.cs" />
     <Compile Include="CommUtil\PkgUtil.cs" />
@@ -210,6 +216,9 @@
       <DependentUpon>Test.cs</DependentUpon>
     </Compile>
     <Compile Include="副本 PrintLpt.cs" />
+    <EmbeddedResource Include="base64Image.resx">
+      <DependentUpon>base64Image.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

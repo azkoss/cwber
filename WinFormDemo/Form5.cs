@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.FtpClient;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
@@ -156,7 +157,7 @@ namespace WinFormDemo
                     Thread.Sleep(200);
                     StringBuilder data = new StringBuilder();
                     DllClass.dc_read(DllClass.IcDev, addr, data);
-                    return data.ToString();
+                    return data.Remove(16,data.Length-16).ToString();
                 }
                 else
                 {
@@ -1358,7 +1359,7 @@ namespace WinFormDemo
         public static extern int M100A_S50WriteBlock(int hCom, bool bHasMac_Addr, byte Mac_Addr, byte SectorAddr, byte blockAddr, byte[] BlockData, byte[] Info);
 
 
-        int hCom = 0;
+        public int hCom = 0;
         byte[] Info = new byte[500];
         byte Mac_Addr = 0x00;
 
@@ -1370,7 +1371,10 @@ namespace WinFormDemo
         /// <returns></returns>
         public string M100AComOpen(string comPort,int baudate)
         {
-            hCom = M100A_CommOpenWithBaud(comPort, baudate);
+            if (hCom == 0)
+            {
+                hCom = M100A_CommOpenWithBaud(comPort, baudate);  
+            }
             if (hCom > 0)
             {
                 int re = 0, i;
@@ -1396,6 +1400,7 @@ namespace WinFormDemo
         {
             byte[] status = new byte[2];
             string result = "";
+            Thread.Sleep(100);
             if (M100A_CheckCardPosition(hCom, false, 0, status, Info) == 0)
             {
                 byte status1 = status[0];
@@ -1449,6 +1454,7 @@ namespace WinFormDemo
         /// <returns></returns>
         public string moveCardToIcPosition()
         {
+            Thread.Sleep(100);
             return M100A_MoveCard(hCom, false, 0, 0x31, Info) == 0 ? "移动卡片操作执行成功" : "移动卡片操作执行失败";
         }
 
@@ -1460,6 +1466,7 @@ namespace WinFormDemo
         {
             byte[] Vercode = new byte[20];
             string info;
+            Thread.Sleep(100);
             return M100A_MoveCard(hCom, false, 0, 0x34, Info) == 0 ? "回收卡成功" : "回收卡失败";
         }
 
@@ -1472,6 +1479,7 @@ namespace WinFormDemo
             int re = 0;
             byte[] cardid = new byte[10];
             string str = "";
+            Thread.Sleep(100);
             re = M100A_S50GetCardID(hCom, false, 0, cardid, Info);
             if (re == 0)
             {
@@ -1491,6 +1499,7 @@ namespace WinFormDemo
         /// <returns></returns>
         public string outCard()
         {
+            Thread.Sleep(100);
             return M100A_MoveCard(hCom, false, 0, 0x33, Info) == 0 ? "弹卡成功" : "弹卡失败";
         }
 
@@ -1502,6 +1511,7 @@ namespace WinFormDemo
         /// <returns></returns>
         public string M100AloadKey(byte sectionAddr,string key)
         {
+            Thread.Sleep(100);
             return M100A_S50LoadSecKey(hCom, false, 0, sectionAddr, 0x31, Encoding.Default.GetBytes(key), Info) == 0 ? "密码校验OK" : "密码校验失败" ;
         }
 
@@ -1513,10 +1523,11 @@ namespace WinFormDemo
         /// <returns></returns>
         public string M100AReadBlock(byte sectionAddr,byte blockAddr)
         {
+            Thread.Sleep(100);
             byte[] blockData = new byte[16];
             if (M100A_S50ReadBlock(hCom, false, 0, sectionAddr, blockAddr, blockData, Info) == 0)
             {
-                return Encoding.Default.GetString(blockData);
+                return Encoding.Default.GetString(blockData).Replace("\0", "");
             }
             else
             {
@@ -1529,14 +1540,348 @@ namespace WinFormDemo
         /// </summary>
         /// <param name="sectionAddr">扇区号</param>
         /// <param name="blockAddr">块号</param>
-        /// <param name="key">密码</param>
+        /// <param name="data">数据</param>
         /// <returns></returns>
-        public string M100AWriteBlock(byte sectionAddr, byte blockAddr,string key)
+        public string M100AWriteBlock(byte sectionAddr, byte blockAddr,string data)
         {
-            return M100A_S50WriteBlock(hCom, false, 0, sectionAddr, blockAddr, Encoding.Default.GetBytes(key), Info) == 0
+            Thread.Sleep(100);
+            return M100A_S50WriteBlock(hCom, false, 0, sectionAddr, blockAddr, Encoding.Default.GetBytes(data), Info) == 0
                 ? "写入成功"
                 : "写入失败";
         }
+        #endregion
+
+        #region K710
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_CommOpen(int Port);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_CommOpenWithBaud(int Port, int Baudate);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_CommClose(int ComHandle);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_GetDllVersion(int ComHandle, char[] strVersion);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_GetSysVersion(int ComHandle, byte MacAddr, byte[] strVersion);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_SendCmd(int ComHandle, byte MacAddr, byte[] p_Cmd, int len);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_Query(int ComHandle, byte MacAddr, byte[] StateInfo);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_SensorQuery(int ComHandle, byte MacAddr, byte[] StateInfo);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_AutoTestMac(int ComHandle, byte MacAddr);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_ReadRecycleCardNum(int ComHandle, byte MacAddr, byte[] szData);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_SetCardNum(int ComHandle, byte MacAddr, int Num);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_DisEnableCount(int ComHandle, byte MacAddr);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_EnableCount(int ComHandle, byte MacAddr);
+
+        [DllImport("D1000_DLL.dll")]
+        public static extern int D1000_ReadCardNumber(int ComHandle, byte MacAddr, byte[] CardNumber);
+
+        byte MacAddress = 0;
+        int ComHandle = 0;
+
+        public string K710ComOpen()
+        {
+            int nRet = 1;
+            byte[] Recv = new byte[200];
+            if (ComHandle == 0)
+            {
+                ComHandle = D1000_CommOpenWithBaud(int.Parse(Properties.Settings.Default.K710ComPort.Substring(3, 1)), 9600);
+            }
+            if (ComHandle > 0)
+            {
+                for (int i = 0; i < 16; i++)
+                {
+                    nRet = D1000_AutoTestMac(ComHandle, (byte)i);
+                    if (nRet == 0)
+                    {
+                        MacAddress = (byte)i;
+                        break;
+                    }
+                }
+
+                if (nRet == 0)
+                {
+                    return "设备连接成功";
+                }
+                else
+                {
+                    return "设备连接失败";
+                }
+            }
+            else
+            {
+                return "串口打开失败";
+            }
+        }
+
+        public string K710RecyleCard()
+        {
+            int nRet;
+            byte[] sendcmd = new byte[3];
+
+            sendcmd[0] = (byte)'C';
+            sendcmd[1] = (byte)'P';
+
+            nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
+            if (nRet == 0)
+            {
+                return "回收成功";
+            }
+            else
+                return "回收失败";
+        }
+
+        public string K710Reset()
+        {
+            int nRet;
+            byte[] sendcmd = new byte[3];
+
+            sendcmd[0] = (byte)'R';
+            sendcmd[1] = (byte)'S';
+
+            nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
+            if (nRet == 0)
+            {
+                return "复位成功";
+            }
+            else
+                return "复位失败";
+        }
+
+        public string K710AllowBeep()
+        {
+            int nRet;
+            byte[] sendcmd = new byte[3];
+
+            sendcmd[0] = (byte)'B';
+            sendcmd[1] = (byte)'E';
+
+            nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
+            if (nRet == 0)
+            {
+                return "允许蜂鸣设置成功";
+            }
+            else
+                return "允许蜂鸣设置失败";
+        }
+
+        public string K710DisAllowBeep()
+        {
+            int nRet;
+            byte[] sendcmd = new byte[3];
+
+            sendcmd[0] = (byte)'B';
+            sendcmd[1] = (byte)'D';
+
+            nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
+            if (nRet == 0)
+            {
+                return "禁止蜂鸣设置成功";
+            }
+            else
+                return "禁止蜂鸣设置失败";
+        }
+
+        public string K710MoveToReadCardPosition()
+        {
+            int nRet;
+            byte[] sendcmd = new byte[3];
+
+            sendcmd[0] = (byte)'F';
+            sendcmd[1] = (byte)'C';
+            sendcmd[2] = (byte)'7';
+
+            nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 3);
+            if (nRet == 0)
+            {
+                return "发卡到读卡位置成功";
+            }
+            else
+                return "发卡到读卡位置失败";
+        }
+
+        public string K710OutCard()
+        {
+            int nRet;
+            byte[] sendcmd = new byte[3];
+
+            sendcmd[0] = (byte)'F';
+            sendcmd[1] = (byte)'C';
+            sendcmd[2] = (byte)'4';
+
+            nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 3);
+            if (nRet == 0)
+            {
+                return "发卡到取卡位置成功";
+            }
+            else
+                return "发卡到取卡位置失败";
+        }
+
+        public string K710ReadCardNo()
+        {
+            byte[] cardNo = new byte[5];
+            string result = "";
+            if (D1000_ReadCardNumber(ComHandle, MacAddress, cardNo) == 0)
+            {
+                foreach (byte b in cardNo)
+                {
+                    result += b.ToString("x2");
+                }
+                return "读卡成功:" + result;
+            }
+            else
+            {
+                return "读卡失败";
+            }
+        }
+
+        public string K710GetStatus()
+        {
+            string result = "";
+            byte[] StateInfo = new byte[4];
+            if (D1000_SensorQuery(ComHandle, MacAddress, StateInfo) == 0)
+            {
+                result += "发卡机状态获取成功:";
+                switch (StateInfo[0])
+                {
+                    case 0x38: //保留
+
+                        break;
+                    case 0x34: //命令不能执行
+                        result += "命令不能执行&请点击“复位”,";
+                        break;
+                    case 0x32: //准备卡失败
+                        result += "准备卡失败&请点击“复位”,";
+                        break;
+                    case 0x31: //正在准备卡
+                        result += "正在准备卡,";
+                        break;
+                    case 0x30: //机器空闲
+                        result += "机器空闲,";
+                        break;
+                }
+
+                switch (StateInfo[1])
+                {
+                    case 0x38: //正在发卡
+                        result += "正在发卡,";
+                        break;
+
+                    case 0x34: //正在收卡
+                        result += "正在收卡,";
+                        break;
+
+                    case 0x32: //发卡出错
+                        result += "发卡过程出错&请点击复位,";
+                        break;
+
+                    case 0x31: //收卡出错
+                        result += "收卡过程出错&请点击复位,";
+                        break;
+
+                    case 0x30: //没有任何动作
+                        result += "没有任何动作,";
+                        break;
+                }
+                switch (StateInfo[2])
+                {
+                    case 0x39:
+                        result += "回收卡箱已满&";
+
+                        result += "卡箱预空,";
+
+                        break;
+                    case 0x38: //无捕卡
+
+                        result += "回收卡箱已满&";
+
+                        result += "卡箱非预空,";
+                        break;
+
+                    case 0x34: //重叠卡
+                        result += "重叠卡,";
+                        break;
+
+                    case 0x32: //卡堵塞
+                        result += "卡堵塞,";
+                        break;
+
+                    case 0x31: //卡箱预空
+                        result += "卡箱预空,";
+                        break;
+
+                    case 0x30: //卡箱为非预空状态
+                        result += "卡箱为非预空状态,";
+                        break;
+
+                }
+
+                switch (StateInfo[3])
+                {
+                    case 0x3E: //只有一张卡，在传感器２-３位置
+                        result += "只有一张卡在传感器２-３位置";
+                        break;
+
+                    case 0x3B: //只有一张卡，在传感器１-２位置
+                        result += "只有一张卡在传感器１-２位置";
+                        break;
+
+                    case 0x39: //只有一张卡，在传感器１位置
+                        result += "只有一张卡在传感器１位置";
+                        break;
+
+                    case 0x38: //卡箱是空的已经无任何卡片
+                        result += "卡箱是空的已经无任何卡片";
+                        break;
+
+                    case 0x36: //在传感器２和３的位置
+                        result += "卡在传感器２和３的位置";
+                        break;
+
+                    case 0x34: //在传感器３位置，预发卡位置
+                        result += "卡在传感器３预发卡位置";
+                        break;
+
+                    case 0x33: //在传感器１和２的位置(读卡位置)
+                        result += "卡在传感器１和２的位置(读卡位置)";
+                        break;
+
+                    case 0x32: //在传感器２的位置
+                        result += "在传感器２的位置";
+                        break;
+
+                    case 0x31: //在卡口位置传感器１位置(取卡位置)
+                        result += "卡在卡口位置传感器１位置(取卡位置)";
+                        break;
+
+                }
+            }
+            else
+            {
+                result = "发卡机状态获取失败";
+            }
+            return result;
+        }
+
         #endregion
 
         #endregion
@@ -2043,6 +2388,8 @@ namespace WinFormDemo
 
         #endregion
 
+        #region FormLoad
+
         private void Form5_Load(object sender, EventArgs e)
         {
             //Crt580ComOpen();
@@ -2108,6 +2455,9 @@ namespace WinFormDemo
             //MessageBox.Show();
             //sfz_card_read();
         }
+
+        #endregion
+        
 
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
@@ -2362,5 +2712,31 @@ namespace WinFormDemo
         {
             MessageBox.Show(M100AWriteBlock(9, 0, textBox1.Text));
         }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            paint("<?xml version='1.0' encoding='utf-8'?><print_info width='300' height='500'><tr font='宋体' size='16' x='270' y='10' >北京电力医院处方笺1</tr><tr font='宋体' size='10' x='95' y='50' >定点医疗机构编码: 06110001</tr><tr font='黑体' size='16' x='290' y='50' >医保</tr><tr font='宋体' size='10' x='580' y='50' >医疗保险</tr><tr font='宋体' size='10' x='95' y='70' >处方号: 15478355</tr><tr font='宋体' size='12' x='430' y='70' >心内门诊</tr><tr font='宋体' size='10' x='580' y='70' >门诊号: 00104109</tr><tr font='宋体' size='10' x='95' y='100' >姓名: 风来景</tr><tr font='宋体' size='10' x='200' y='100' >性别:女</tr><tr font='宋体' size='10' x='270' y='100' >年龄:59岁</tr><tr font='宋体' size='10' x='350' y='100' >单位: 北京京丰印刷厂</tr><tr font='黑体' size='10' x='80' y='110' >______________________________________________________________________________________</tr><tr font='黑体' size='10' x='77' y='123' >|</tr><tr font='黑体' size='10' x='77' y='136' >|</tr><tr font='黑体' size='10' x='77' y='149' >|</tr><tr font='黑体' size='10' x='77' y='162' >|</tr><tr font='黑体' size='10' x='77' y='175' >|</tr><tr font='黑体' size='10' x='77' y='188' >|</tr><tr font='宋体' size='10' x='80' y='125' >临床诊断:</tr><tr font='宋体' size='10' x='95' y='145' >高血压,骨质疏</tr><tr font='宋体' size='10' x='95' y='160' >松,结膜炎,糖尿</tr><tr font='宋体' size='10' x='95' y='175' >病,糖尿病性视网</tr><tr font='宋体' size='10' x='95' y='190' >膜病变,行动不</tr><tr font='宋体' size='10' x='95' y='205' >变,周围神经病</tr><tr font='宋体' size='10' x='95' y='520' >过敏试验:</tr><tr font='黑体' size='10' x='215' y='123' >|</tr><tr font='黑体' size='10' x='215' y='136' >|</tr><tr font='黑体' size='10' x='215' y='149' >|</tr><tr font='黑体' size='10' x='215' y='162' >|</tr><tr font='黑体' size='10' x='215' y='175' >|</tr><tr font='黑体' size='10' x='215' y='188' >|</tr><tr font='黑体' size='10' x='215' y='201' >|</tr><tr font='黑体' size='10' x='215' y='214' >|</tr><tr font='黑体' size='10' x='215' y='227' >|</tr><tr font='黑体' size='10' x='215' y='240' >|</tr><tr font='黑体' size='10' x='225' y='130' >localPicture:F://PxTwo.png</tr><tr font='黑体' size='10' x='235' y='170' >阿莫西林胶囊(啊啊肯定是看看里)(1片*7片/盒)</tr><tr font='黑体' size='10' x='560' y='170' >8盒</tr><tr font='黑体' size='10' x='620' y='170' >233.92有自付</tr><tr font='黑体' size='10' x='235' y='230' >用法:2片/次</tr><tr font='黑体' size='10' x='400' y='230' >1次/日</tr><tr font='黑体' size='10' x='480' y='230' >口服</tr><tr font='黑体' size='10' x='520' y='230' >空腹或进餐服用</tr><tr font='黑体' size='10' x='225' y='250' >base64Picture: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dFJpZ2h0bG9uZwAAAAAAAAALY3JvcFJlY3RUb3Bsb25nAAAAAAA4QklNA+0AAAAAABAAYAAAAAEAAgBgAAAAAQACOEJJTQQmAAAAAAAOAAAAAAAAAAAAAD+AAAA4QklNBA0AAAAAAAQAAAAeOEJJTQQZAAAAAAAEAAAAHjhCSU0D8wAAAAAACQAAAAAAAAAAAQA4QklNJxAAAAAAAAoAAQAAAAAAAAACOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgABAKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAABOEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAADhCSU0ECAAAAAAAEAAAAAEAAAJAAAACQAAAAAA4QklNBB4AAAAAAAQAAAAAOEJJTQQaAAAAAAM3AAAABgAAAAAAAAAAAAAATQAAAEsAAAABADEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAEsAAABNAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAABudWxsAAAAAgAAAAZib3VuZHNPYmpjAAAAAQAAAAAAAFJjdDEAAAAEAAAAAFRvcCBsb25nAAAAAAAAAABMZWZ0bG9uZwAAAAAAAAAAQnRvbWxvbmcAAABNAAAAAFJnaHRsb25nAAAASwAAAAZzbGljZXNWbExzAAAAAU9iamMAAAABAAAAAAAFc2xpY2UAAAASAAAAB3NsaWNlSURsb25nAAAAAAAAAAdncm91cElEbG9uZwAAAAAAAAAGb3JpZ2luZW51bQAAAAxFU2xpY2VPcmlnaW4AAAANYXV0b0dlbmVyYXRlZAAAAABUeXBlZW51bQAAAApFU2xpY2VUeXBlAAAAAEltZyAAAAAGYm91bmRzT2JqYwAAAAEAAAAAAABSY3QxAAAABAAAAABUb3AgbG9uZwAAAAAAAAAATGVmdGxvbmcAAAAAAAAAAEJ0b21sb25nAAAATQAAAABSZ2h0bG9u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3gCfuWV9VWlv1c6dJkuoY7/OG/8A78tO4xTYfBp/IqH1b/8AE/03v+q0/wDUNSU6SSSSSn//0/VUkkklKSSSSUpJJJJSO8E02Aclp/IqP1b0+r/TR4YtI+5jVomIM8d1Gr0vTb6O30oGzZG3b+bt2+3akpmkkkkp/9k4QklNBCEAAAAAAFUAAAABAQAAAA8AQQBkAG8AYgBlACAAUABoAG8AdABvAHMAaABvAHAAAAATAEEAZABvAGIAZQAgAFAAaABvAHQAbwBzAGgAbwBwACAAQwBTADYAAAABADhCSU0EBgAAAAAABwAEAAAAAQEA/+EMtWh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0iMTJENDAyQkQ1NEQ4MzNBMkRCREFCNEU4NTc0MkVEODQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Q0YwMUJFRTIwNDFCRTgxMUJBRUNERDc3ODg2NTVBQzgiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0iMTJENDAyQkQ1NEQ4MzNBMkRCREFCNEU4NTc0MkVEODQiIGRjOmZvcm1hdD0iaW1hZ2UvanBlZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wOkNyZWF0ZURhdGU9IjIwMTgtMDItMjZUMjM6MDI6MTQrMDg6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDE4LTAyLTI2VDIzOjEzOjExKzA4OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDE4LTAyLTI2VDIzOjEzOjExKzA4OjAwIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6Q0YwMUJFRTIwNDFCRTgxMUJBRUNERDc3ODg2NTVBQzgiIHN0RXZ0OndoZW49IjIwMTgtMDItMjZUMjM6MTM6MTErMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8P3hwYWNrZXQgZW5kPSJ3Ij8+/+4ADkFkb2JlAGQAAAAAAf/bAIQABgQEBAUEBgUFBgkGBQYJCwgGBggLDAoKCwoKDBAMDAwMDAwQDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAEHBwcNDA0YEBAYFA4ODhQUDg4O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</tr></print_info>","",0,0,0,0);
+        }
+
+        protected Bitmap Base64StringToImage(string strbase64)
+        {
+            try
+            {
+                byte[] arr = Convert.FromBase64String(strbase64);
+                MemoryStream ms = new MemoryStream(arr);
+                Bitmap bmp = new Bitmap(ms);
+
+                //                bmp.Save(@"d:\test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                //bmp.Save(@"d:\"test.bmp", ImageFormat.Bmp);  
+                //bmp.Save(@"d:\"test.gif", ImageFormat.Gif);  
+                //bmp.Save(@"d:\"test.png", ImageFormat.Png);  
+                ms.Close();
+                return bmp;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }  
     }
 }

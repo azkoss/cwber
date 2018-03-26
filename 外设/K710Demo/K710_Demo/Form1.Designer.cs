@@ -51,6 +51,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button16 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +128,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button16);
             this.groupBox2.Controls.Add(this.button15);
             this.groupBox2.Controls.Add(this.button11);
             this.groupBox2.Controls.Add(this.button12);
@@ -249,6 +251,7 @@
             // 
             // button5
             // 
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(342, 31);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(139, 44);
@@ -258,6 +261,7 @@
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(197, 31);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(139, 44);
@@ -291,6 +295,16 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(661, 21);
             this.textBox1.TabIndex = 3;
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(197, 197);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(139, 44);
+            this.button16.TabIndex = 13;
+            this.button16.Text = "获取状态";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // Form1
             // 
@@ -337,6 +351,7 @@
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
     }
 }
 

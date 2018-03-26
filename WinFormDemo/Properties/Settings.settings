@@ -33,7 +33,7 @@
       <Value Profile="(Default)">E:\\融威众邦\\Test\\Test\\bin\\Debug\\你.exe</Value>
     </Setting>
     <Setting Name="printerName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Microsoft Print to PDF</Value>
+      <Value Profile="(Default)">Microsoft XPS Document Writer</Value>
     </Setting>
     <Setting Name="testMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -82,6 +82,9 @@
     </Setting>
     <Setting Name="WuLiHuJiaoQiPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">COM5</Value>
+    </Setting>
+    <Setting Name="K710ComPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM7</Value>
     </Setting>
   </Settings>
 </SettingsFile>

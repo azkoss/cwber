@@ -102,7 +102,7 @@ namespace K710_Demo
             for (int i = 0; by[i] != '\0'; i++)
             {
                 char ch;
-                ch = (char)by[i];
+                ch = (char) by[i];
                 str += ch;
             }
             return str;
@@ -113,8 +113,8 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'D';
-            sendcmd[1] = (byte)'C';
+            sendcmd[0] = (byte) 'D';
+            sendcmd[1] = (byte) 'C';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
             if (nRet == 0)
@@ -127,23 +127,23 @@ namespace K710_Demo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int nRet=1;
+            int nRet = 1;
             byte[] Recv = new byte[200];
 
             ComHandle = D1000_CommOpenWithBaud(int.Parse(comboBox1.Text.Substring(3, 1)), int.Parse(comboBox2.Text));
-            if(ComHandle > 0)
+            if (ComHandle > 0)
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    nRet = D1000_AutoTestMac(ComHandle, (byte)i);
+                    nRet = D1000_AutoTestMac(ComHandle, (byte) i);
                     if (nRet == 0)
                     {
-                        MacAddress = (byte)i;
+                        MacAddress = (byte) i;
                         break;
                     }
                 }
 
-                if(nRet==0)
+                if (nRet == 0)
                 {
                     textBox1.Text = "设备连接成功";
                     button1.Enabled = false;
@@ -163,7 +163,7 @@ namespace K710_Demo
         private void button2_Click(object sender, EventArgs e)
         {
             int nRet = D1000_CommClose(ComHandle);
-            if(nRet == 0)
+            if (nRet == 0)
             {
                 button1.Enabled = true;
                 button2.Enabled = false;
@@ -178,8 +178,8 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'C';
-            sendcmd[1] = (byte)'P';
+            sendcmd[0] = (byte) 'C';
+            sendcmd[1] = (byte) 'P';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
             if (nRet == 0)
@@ -195,8 +195,8 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'R';
-            sendcmd[1] = (byte)'S';
+            sendcmd[0] = (byte) 'R';
+            sendcmd[1] = (byte) 'S';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
             if (nRet == 0)
@@ -212,8 +212,8 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'B';
-            sendcmd[1] = (byte)'E';
+            sendcmd[0] = (byte) 'B';
+            sendcmd[1] = (byte) 'E';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
             if (nRet == 0)
@@ -229,8 +229,8 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'B';
-            sendcmd[1] = (byte)'D';
+            sendcmd[0] = (byte) 'B';
+            sendcmd[1] = (byte) 'D';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 2);
             if (nRet == 0)
@@ -246,9 +246,9 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'F';
-            sendcmd[1] = (byte)'C';
-            sendcmd[2] = (byte)'6';
+            sendcmd[0] = (byte) 'F';
+            sendcmd[1] = (byte) 'C';
+            sendcmd[2] = (byte) '6';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 3);
             if (nRet == 0)
@@ -279,9 +279,9 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'F';
-            sendcmd[1] = (byte)'C';
-            sendcmd[2] = (byte)'7';
+            sendcmd[0] = (byte) 'F';
+            sendcmd[1] = (byte) 'C';
+            sendcmd[2] = (byte) '7';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 3);
             if (nRet == 0)
@@ -297,9 +297,9 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'F';
-            sendcmd[1] = (byte)'C';
-            sendcmd[2] = (byte)'4';
+            sendcmd[0] = (byte) 'F';
+            sendcmd[1] = (byte) 'C';
+            sendcmd[2] = (byte) '4';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 3);
             if (nRet == 0)
@@ -315,9 +315,9 @@ namespace K710_Demo
             int nRet;
             byte[] sendcmd = new byte[3];
 
-            sendcmd[0] = (byte)'F';
-            sendcmd[1] = (byte)'C';
-            sendcmd[2] = (byte)'0';
+            sendcmd[0] = (byte) 'F';
+            sendcmd[1] = (byte) 'C';
+            sendcmd[2] = (byte) '0';
 
             nRet = D1000_SendCmd(ComHandle, MacAddress, sendcmd, 3);
             if (nRet == 0)
@@ -345,5 +345,134 @@ namespace K710_Demo
                 textBox1.Text = "读卡失败";
             }
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string result ="";
+            byte[] StateInfo = new byte[4];
+            if (D1000_SensorQuery(ComHandle, MacAddress, StateInfo) == 0)
+            {
+                result += "发卡机状态获取成功:";
+                switch (StateInfo[0])
+                {
+                    case 0x38: //保留
+
+                        break;
+                    case 0x34: //命令不能执行
+                        result += "命令不能执行&请点击“复位”,";
+                        break;
+                    case 0x32: //准备卡失败
+                        result += "准备卡失败&请点击“复位”,";
+                        break;
+                    case 0x31: //正在准备卡
+                        result += "正在准备卡,";
+                        break;
+                    case 0x30: //机器空闲
+                        result += "机器空闲,";
+                        break;
+                }
+
+                switch (StateInfo[1])
+                {
+                    case 0x38: //正在发卡
+                        result += "正在发卡,";
+                        break;
+
+                    case 0x34: //正在收卡
+                        result += "正在收卡,";
+                        break;
+
+                    case 0x32: //发卡出错
+                        result += "发卡过程出错&请点击复位,";
+                        break;
+
+                    case 0x31: //收卡出错
+                        result += "收卡过程出错&请点击复位,";
+                        break;
+
+                    case 0x30: //没有任何动作
+                        result += "没有任何动作,";
+                        break;
+                }
+                switch (StateInfo[2])
+                {
+                    case 0x39:
+                        result += "回收卡箱已满&";
+
+                        result += "卡箱预空,";
+
+                        break;
+                    case 0x38: //无捕卡
+
+                        result += "回收卡箱已满&";
+
+                        result += "卡箱非预空,";
+                        break;
+
+                    case 0x34: //重叠卡
+                        result += "重叠卡,";
+                        break;
+
+                    case 0x32: //卡堵塞
+                        result += "卡堵塞,";
+                        break;
+
+                    case 0x31: //卡箱预空
+                        result += "卡箱预空,";
+                        break;
+
+                    case 0x30: //卡箱为非预空状态
+                        result += "卡箱为非预空状态,";
+                        break;
+
+                }
+
+                switch (StateInfo[3])
+                {
+                    case 0x3E: //只有一张卡，在传感器２-３位置
+                        result += "只有一张卡在传感器２-３位置";
+                        break;
+
+                    case 0x3B: //只有一张卡，在传感器１-２位置
+                        result += "只有一张卡在传感器１-２位置";
+                        break;
+
+                    case 0x39: //只有一张卡，在传感器１位置
+                        result += "只有一张卡在传感器１位置";
+                        break;
+
+                    case 0x38: //卡箱是空的已经无任何卡片
+                        result += "卡箱是空的已经无任何卡片";
+                        break;
+
+                    case 0x36: //在传感器２和３的位置
+                        result += "卡在传感器２和３的位置";
+                        break;
+
+                    case 0x34: //在传感器３位置，预发卡位置
+                        result += "卡在传感器３预发卡位置";
+                        break;
+
+                    case 0x33: //在传感器１和２的位置(读卡位置)
+                        result += "卡在传感器１和２的位置(读卡位置)";
+                        break;
+
+                    case 0x32: //在传感器２的位置
+                        result += "在传感器２的位置";
+                        break;
+
+                    case 0x31: //在卡口位置传感器１位置(取卡位置)
+                        result += "卡在卡口位置传感器１位置(取卡位置)";
+                        break;
+
+                }
+            }
+            else
+            {
+                result = "发卡机状态获取失败";
+            }
+            textBox1.Text = result;
+        }
     }
 }
+
